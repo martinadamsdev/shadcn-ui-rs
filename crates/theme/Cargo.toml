@@ -8,3 +8,4 @@ description = "Theme system for shadcn-ui-rs"
 [dependencies]
 gpui.workspace = true
 serde.workspace = true
+core-text.workspace = true

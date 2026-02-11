@@ -1,8 +1,11 @@
-//! Component registry definitions for shadcn-ui-rs
+//! Component registry definitions for shadcn-ui-rs.
+//!
+//! Provides metadata about available components, their dependencies,
+//! and categorization.
 
 use serde::{Deserialize, Serialize};
 
-/// Component metadata in the registry
+/// Component metadata in the registry.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ComponentMeta {
     pub name: String,
@@ -14,7 +17,7 @@ pub struct ComponentMeta {
     pub category: ComponentCategory,
 }
 
-/// Component categories
+/// Component categories.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ComponentCategory {
@@ -26,7 +29,21 @@ pub enum ComponentCategory {
     Special,
 }
 
-/// Registry containing all available components
+impl ComponentCategory {
+    /// Human-readable display name for the category.
+    pub fn display_name(&self) -> &'static str {
+        match self {
+            ComponentCategory::Input => "Input",
+            ComponentCategory::Display => "Display",
+            ComponentCategory::Feedback => "Feedback",
+            ComponentCategory::Navigation => "Navigation",
+            ComponentCategory::Layout => "Layout",
+            ComponentCategory::Special => "Special",
+        }
+    }
+}
+
+/// Registry containing all available components.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Registry {
     pub version: String,
@@ -34,23 +51,61 @@ pub struct Registry {
 }
 
 impl Registry {
-    /// Get all component names
+    /// Get all component names.
     pub fn component_names(&self) -> Vec<&str> {
         self.components.iter().map(|c| c.name.as_str()).collect()
     }
 
-    /// Find a component by name
+    /// Find a component by name.
     pub fn find(&self, name: &str) -> Option<&ComponentMeta> {
         self.components.iter().find(|c| c.name == name)
     }
 
-    /// Get components by category
+    /// Get components by category.
     pub fn by_category(&self, category: ComponentCategory) -> Vec<&ComponentMeta> {
-        self.components.iter().filter(|c| c.category == category).collect()
+        self.components
+            .iter()
+            .filter(|c| c.category == category)
+            .collect()
+    }
+
+    /// Resolve all transitive dependencies for a set of component names.
+    ///
+    /// Returns the original names plus any dependencies, in installation order
+    /// (dependencies first).
+    pub fn resolve_dependencies(&self, names: &[&str]) -> Vec<String> {
+        let mut resolved: Vec<String> = Vec::new();
+        let mut visited: std::collections::HashSet<String> = std::collections::HashSet::new();
+
+        for name in names {
+            self.resolve_recursive(name, &mut resolved, &mut visited);
+        }
+
+        resolved
+    }
+
+    fn resolve_recursive(
+        &self,
+        name: &str,
+        resolved: &mut Vec<String>,
+        visited: &mut std::collections::HashSet<String>,
+    ) {
+        if visited.contains(name) {
+            return;
+        }
+        visited.insert(name.to_string());
+
+        if let Some(component) = self.find(name) {
+            for dep in &component.dependencies {
+                self.resolve_recursive(dep, resolved, visited);
+            }
+        }
+
+        resolved.push(name.to_string());
     }
 }
 
-/// Default registry with Phase 1 components
+/// Default registry with all Phase 1 components.
 pub fn default_registry() -> Registry {
     Registry {
         version: "0.1.0".to_string(),
@@ -73,7 +128,99 @@ pub fn default_registry() -> Registry {
                 dependencies: vec![],
                 category: ComponentCategory::Input,
             },
-            // TODO: Add more components
+            ComponentMeta {
+                name: "label".to_string(),
+                version: "0.1.0".to_string(),
+                description: "A label component for form fields".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["label.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Input,
+            },
+            ComponentMeta {
+                name: "checkbox".to_string(),
+                version: "0.1.0".to_string(),
+                description: "A checkbox input with checked/unchecked/indeterminate states"
+                    .to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["checkbox.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Input,
+            },
+            ComponentMeta {
+                name: "radio".to_string(),
+                version: "0.1.0".to_string(),
+                description: "A radio group component for single selection".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["radio.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Input,
+            },
+            ComponentMeta {
+                name: "switch".to_string(),
+                version: "0.1.0".to_string(),
+                description: "A toggle switch component".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["switch.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Input,
+            },
+            ComponentMeta {
+                name: "slider".to_string(),
+                version: "0.1.0".to_string(),
+                description: "A slider input for selecting a value from a range".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["slider.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Input,
+            },
+            ComponentMeta {
+                name: "select".to_string(),
+                version: "0.1.0".to_string(),
+                description: "A select dropdown for choosing from a list of options".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["select.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Input,
+            },
+            ComponentMeta {
+                name: "toggle".to_string(),
+                version: "0.1.0".to_string(),
+                description: "A toggle button that can be on or off".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["toggle.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Input,
+            },
+            ComponentMeta {
+                name: "toggle_group".to_string(),
+                version: "0.1.0".to_string(),
+                description: "A group of toggle buttons with single or multiple selection"
+                    .to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["toggle_group.rs".to_string()],
+                dependencies: vec!["toggle".to_string()],
+                category: ComponentCategory::Input,
+            },
+            ComponentMeta {
+                name: "card".to_string(),
+                version: "0.1.0".to_string(),
+                description: "A card container with header, content, and footer sections"
+                    .to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["card.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Display,
+            },
+            ComponentMeta {
+                name: "dialog".to_string(),
+                version: "0.1.0".to_string(),
+                description: "A modal dialog overlay with backdrop".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["dialog.rs".to_string()],
+                dependencies: vec!["button".to_string()],
+                category: ComponentCategory::Feedback,
+            },
         ],
     }
 }

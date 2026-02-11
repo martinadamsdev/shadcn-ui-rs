@@ -3,6 +3,7 @@
 use clap::{Parser, Subcommand};
 
 mod commands;
+pub mod config;
 
 #[derive(Parser)]
 #[command(name = "shadcn-ui")]
