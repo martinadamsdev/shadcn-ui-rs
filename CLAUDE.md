@@ -1,59 +1,59 @@
 # shadcn-ui-rs
 
-> 灵感来自 shadcn/ui 的 Rust GPUI 组件库
+> UI component library for GPUI, inspired by shadcn/ui
 
-## 项目概述
+## Project Overview
 
-基于 GPUI 框架的 UI 组件库，灵感来自 shadcn/ui。遵循"代码复制而非依赖"的核心理念——组件源码直接复制到用户项目中。
+A UI component library built on the GPUI framework, inspired by shadcn/ui. Follows the "copy, not dependency" philosophy -- component source code is copied directly into user projects.
 
-## 技术栈
+## Tech Stack
 
 - **Rust**: 1.93.0
 - **GPUI**: 0.2.2 (crates.io)
-- **平台**: macOS (Metal), Linux (Wayland/X11 + Vulkan), Windows (Direct3D)
-- **许可证**: Apache-2.0
+- **Platforms**: macOS (Metal), Linux (Wayland/X11 + Vulkan), Windows (Direct3D)
+- **License**: Apache-2.0
 
-## 项目结构
+## Project Structure
 
 ```
 shadcn-ui-rs/
 ├── crates/
-│   ├── cli/              # CLI 工具 (shadcn-ui)
-│   ├── registry/         # 组件注册表定义
-│   └── theme/            # 主题系统核心
-├── components/           # 组件源码 (通过 include_str! 嵌入 CLI)
-├── templates/            # 项目初始化模板
+│   ├── cli/              # CLI tool (shadcn-ui)
+│   ├── registry/         # Component registry definitions
+│   └── theme/            # Theme system core
+├── components/           # Component source code (embedded in CLI via include_str!)
+├── templates/            # Project initialization templates
 ├── docs/
-│   ├── plans/            # 实施计划
-│   └── roadmap.md        # 开发路线图 (7 个阶段, 59 个组件)
-├── examples/             # 示例项目
+│   ├── plans/            # Implementation plans
+│   └── roadmap.md        # Development roadmap (7 phases, 59 components)
+├── examples/             # Example projects
 └── .github/workflows/    # CI (macOS + Linux + Windows)
 ```
 
-## 当前进度
+## Current Progress
 
-- **v0.1.0 (Phase 1)** ✅ -- 12 核心组件 + CLI + 主题系统
-- **v0.2.0 (Phase 2)** 🚧 -- 10 个覆盖层和反馈组件
-- 详见 `docs/roadmap.md` 和 `docs/plans/`
+- **v0.1.0 (Phase 1)** -- 12 core components + CLI + theme system
+- **v0.2.0 (Phase 2)** -- 10 overlay and feedback components
+- See `docs/roadmap.md` and `docs/plans/` for details
 
-## 编码规范
+## Coding Standards
 
-### GPUI 关键约定
+### GPUI Key Conventions
 
 ```rust
-// gpui::prelude::* 不导出 div，必须显式导入
+// gpui::prelude::* does not export div, must import explicitly
 use gpui::{div, px, App, Div, ElementId, IntoElement, Stateful, Window};
 
-// .id() 后类型变为 Stateful<Div>，.when() 闭包需要标注类型
+// .id() changes type to Stateful<Div>, .when() closures need type annotation
 div().id("my-id")
     .when(condition, |el: Stateful<Div>| el.opacity(0.5))
 
-// .on_click() 只能在 Stateful<Div> 上使用（需要先调用 .id()）
+// .on_click() only works on Stateful<Div> (must call .id() first)
 ```
 
-### 组件 API 模式
+### Component API Pattern
 ```rust
-// Builder 模式
+// Builder pattern
 Button::new("Click me")
     .variant(ButtonVariant::Outline)
     .size(ButtonSize::Lg)
@@ -62,7 +62,7 @@ Button::new("Click me")
     })
 ```
 
-### 主题访问
+### Theme Access
 ```rust
 fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
     let theme = cx.global::<Theme>();
@@ -70,38 +70,38 @@ fn render(self, _window: &mut Window, cx: &mut App) -> impl IntoElement {
 }
 ```
 
-### 组件文件结构
+### Component File Structure
 ```rust
-//! 模块文档注释
+//! Module doc comment
 use gpui::{...};
 use crate::theme::Theme;
 
-// 1. 枚举定义 (Variant, Size 等)
-// 2. 结构体 + Builder 方法
-// 3. ParentElement impl (容器组件)
+// 1. Enum definitions (Variant, Size, etc.)
+// 2. Struct + Builder methods
+// 3. ParentElement impl (container components)
 // 4. RenderOnce impl
 // 5. #[cfg(test)] mod tests
 ```
 
-### 组件注册
-新组件需要更新三个文件:
-1. `components/mod.rs` -- 模块声明和重导出
-2. `crates/cli/src/component_sources.rs` -- `include_str!()` 嵌入
-3. `crates/registry/src/lib.rs` -- `ComponentMeta` 元数据
+### Component Registration
+New components must update three files:
+1. `components/mod.rs` -- module declaration and re-exports
+2. `crates/cli/src/component_sources.rs` -- `include_str!()` embedding
+3. `crates/registry/src/lib.rs` -- `ComponentMeta` metadata
 
-## 依赖版本
+## Dependencies
 
 ```toml
 gpui = "0.2"
 clap = "4"
 serde = "1"
 tokio = "1"
-# core-text 仅 macOS 条件依赖
+# core-text is macOS-only conditional dependency
 # [target.'cfg(target_os = "macos")'.dependencies]
 # core-text = "=21.0.0"
 ```
 
-## 构建和测试
+## Build and Test
 
 ```bash
 cargo build --workspace
@@ -110,8 +110,8 @@ cargo clippy --workspace -- -D warnings
 cargo fmt --all -- --check
 ```
 
-## Git 规范
+## Git Conventions
 
-- 作者: `martinadams.dev <martinadams.dev@gmail.com>`
-- 提交信息不包含 AI 相关内容
-- 不包含 Co-Authored-By 行
+- Author: `martinadams.dev <martinadams.dev@gmail.com>`
+- Commit messages must not contain AI-related content
+- No Co-Authored-By lines

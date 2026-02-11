@@ -36,53 +36,25 @@ Core foundation: CLI tooling, theme system, and 12 essential components.
 
 ---
 
-## Phase 2 -- v0.2.0
+## Phase 2 -- v0.2.0 ✅
 
 Overlay and feedback components. Built on `deferred()` layered rendering and `with_animation()` for transitions.
 
-### Components (10)
+### Completed
 
-- [ ] **Alert** -- Static alert box with icon, title, and description
-  - Variants: default, destructive
-  - Pure layout component, no interactivity
-- [ ] **AlertDialog** -- Modal confirmation dialog with action/cancel buttons
-  - Reuse Dialog backdrop and deferred rendering
-  - Add `on_confirm` / `on_cancel` callbacks
-- [ ] **Tooltip** -- Hover-triggered overlay with text content
-  - Use `deferred()` for rendering above content
-  - Position relative to trigger element using `Bounds` from layout
-  - Show/hide on hover with optional delay
-- [ ] **Popover** -- Click-triggered overlay with arbitrary content
-  - Same positioning strategy as Tooltip
-  - Dismiss with `on_mouse_down_out()`
-  - Support `side` and `align` options
-- [ ] **HoverCard** -- Hover-triggered card overlay with rich content
-  - Same as Tooltip but accepts child elements
-- [ ] **DropdownMenu** -- Click-triggered menu with items, separators, and sub-menus
-  - Extend Select's dropdown pattern
-  - Add support for groups, labels, separators, keyboard navigation
-- [ ] **Sheet** -- Slide-in overlay panel from screen edge
-  - Use `deferred()` + absolute positioning
-  - Animate slide-in/out with `with_animation()` and `ease_in_out`
-  - Support `side`: top, right, bottom, left
-- [ ] **Drawer** -- Bottom sheet variant of Sheet
-  - Reuse Sheet implementation with `side: bottom` default
-- [ ] **Toast** -- Temporary notification with auto-dismiss
-  - Use `deferred()` for rendering at screen corner
-  - Timer-based auto-dismiss via `cx.spawn()` with delay
-  - Support action button and close button
-- [ ] **Sonner** -- Stacked toast notification system
-  - Toast manager for queuing/stacking multiple toasts
-  - Track toast list state, animate stack positioning
-
-### Infrastructure
-
-- [ ] Shared `Overlay` utility for deferred + positioned rendering
-- [ ] Shared `Dismissable` behavior (click outside, escape key)
-- [ ] Animation helpers: slide-in, fade-in, scale-in
-- [ ] Add all 10 components to CLI registry (`component_sources.rs`)
-- [ ] Unit tests for each component builder
-- [ ] Update example project to demonstrate overlay components
+- [x] **Alert** -- Static alert box with icon, title, and description (default, destructive variants)
+- [x] **AlertDialog** -- Modal confirmation dialog with action/cancel buttons
+- [x] **Tooltip** -- Hover-triggered overlay with text content (top, right, bottom, left sides)
+- [x] **Popover** -- Click-triggered overlay with arbitrary content (side + align options)
+- [x] **HoverCard** -- Hover-triggered card overlay with rich content
+- [x] **DropdownMenu** -- Click-triggered menu with items, separators, and labels
+- [x] **Sheet** -- Slide-in overlay panel from screen edge (top, right, bottom, left)
+- [x] **Drawer** -- Bottom sheet variant with drag handle
+- [x] **Toast** -- Temporary notification with auto-dismiss (default, success, error, warning variants)
+- [x] **Sonner** -- Stacked toast notification system (top-left/right, bottom-left/right positions)
+- [x] All 10 components added to CLI registry (`component_sources.rs`)
+- [x] Unit tests for each component builder
+- [x] Cross-platform CI: macOS, Linux, Windows
 
 ---
 
@@ -346,7 +318,7 @@ The following shadcn/ui components are not planned due to limited value in a des
 | Version | Phase | Components | Total |
 |---------|-------|------------|-------|
 | v0.1.0 | Phase 1 ✅ | 12 core components | 12 |
-| v0.2.0 | Phase 2 | 10 overlay/feedback | 22 |
+| v0.2.0 | Phase 2 ✅ | 10 overlay/feedback | 22 |
 | v0.3.0 | Phase 3 | 12 visual/display | 34 |
 | v0.4.0 | Phase 4 | 12 navigation/structure | 46 |
 | v0.5.0 | Phase 5 | 10 advanced interactive | 56 |
