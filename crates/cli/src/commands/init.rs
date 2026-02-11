@@ -418,8 +418,15 @@ pub fn preset_colors(name: &str) -> PresetColors {
 }
 
 /// Format a single HSL tuple as a code string like `hsl(240.0, 5.9, 10.0)`.
+///
+/// Ensures float literals always include a decimal point (e.g. `0.0` instead of
+/// `0`), which is required for valid Rust source code.
 fn fmt_hsl(c: (f32, f32, f32)) -> String {
-    format!("hsl({}, {}, {})", c.0, c.1, c.2)
+    fn f(v: f32) -> String {
+        let s = format!("{v}");
+        if s.contains('.') { s } else { format!("{v}.0") }
+    }
+    format!("hsl({}, {}, {})", f(c.0), f(c.1), f(c.2))
 }
 
 /// Generate the `theme.rs` source file based on the user's theme configuration.
@@ -494,6 +501,7 @@ pub struct Theme {{
 impl Global for Theme {{}}
 
 /// Theme color palette.
+#[derive(Debug, Clone)]
 pub struct ThemeColors {{
     pub background: Hsla,
     pub foreground: Hsla,

@@ -58,45 +58,26 @@ Overlay and feedback components. Built on `deferred()` layered rendering and `wi
 
 ---
 
-## Phase 3 -- v0.3.0
+## Phase 3 -- v0.3.0 ✅
 
 Visual display components. 11 components (Spinner deferred to Phase 6).
 
-### Components (11)
+### Completed
 
-- [ ] **Badge** -- Inline status label with variants
-  - Variants: default, secondary, outline, destructive
-  - Pure styled container, similar to Button without interactivity
-- [ ] **Avatar** -- User avatar with fallback initials
-  - Circular container with `rounded_full()`
-  - Fallback to initials text when no image available
-  - Size presets: sm, default, lg
-- [ ] **Separator** -- Horizontal or vertical dividing line
-  - Single div with border, support `orientation` prop
-- [ ] **Skeleton** -- Static loading placeholder
-  - Muted background block with optional width/height
-  - Optional `rounded` flag for circular skeletons
-- [ ] **Progress** -- Horizontal progress bar
-  - Two nested divs: track + filled portion
-  - `value` prop (0.0-100.0) controls fill width
-- [ ] **Kbd** -- Keyboard shortcut display label
-  - Styled inline container with monospace font and border
-- [ ] **Typography** -- Text styling presets (h1-h4, p, blockquote, code, etc.)
-  - 8 independent structs: H1, H2, H3, H4, Paragraph, Blockquote, InlineCode, Lead
-- [ ] **Table** -- Data table with header, body, rows, and cells
-  - Pure flex-based layout: Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption
-- [ ] **ScrollArea** -- Scrollable container with styled scrollbar
-  - Wrap GPUI's `.overflow_y_scroll()` with themed styling
-  - Optional horizontal scroll
-- [ ] **Textarea** -- Multi-line text display (display-only, upgraded in Phase 5)
-  - Multi-line variant of Input with min/max rows
-- [ ] **Empty** -- Empty state placeholder with title, description, and action
-  - Centered layout container with optional description and action button
-
-### Infrastructure
-
-- [ ] Add all 11 components to CLI registry
-- [ ] Unit tests for each component
+- [x] **Badge** -- Inline status label with variants (default, secondary, outline, destructive)
+- [x] **Avatar** -- User avatar with fallback initials (sm, default, lg sizes)
+- [x] **Separator** -- Horizontal or vertical dividing line
+- [x] **Skeleton** -- Static loading placeholder block
+- [x] **Progress** -- Horizontal progress bar (0.0-100.0 value)
+- [x] **Kbd** -- Keyboard shortcut display label
+- [x] **Typography** -- Text styling presets (H1, H2, H3, H4, Paragraph, Blockquote, InlineCode, Lead)
+- [x] **Table** -- Data table (Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption)
+- [x] **ScrollArea** -- Scrollable container with configurable orientation
+- [x] **Textarea** -- Multi-line text display (display-only, upgraded in Phase 5)
+- [x] **Empty** -- Empty state placeholder with title, description, and action
+- [x] All 11 components added to CLI registry
+- [x] Unit tests for each component
+- [x] Example project updated to showcase all 33 Phase 1-3 components
 
 ### Deferred Items
 

@@ -22,8 +22,8 @@
 //! ```
 
 use gpui::{
-    div, AnyElement, App, FontWeight, IntoElement, ParentElement, RenderOnce, SharedString, Styled,
-    Window,
+    div, prelude::*, AnyElement, App, FontWeight, IntoElement, ParentElement, RenderOnce,
+    SharedString, Styled, Window,
 };
 use crate::theme::Theme;
 

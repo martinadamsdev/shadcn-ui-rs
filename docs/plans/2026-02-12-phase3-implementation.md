@@ -569,20 +569,20 @@ All agents run in parallel. After completion, team lead updates integration file
 ## File Checklist
 
 New files to create:
-- [ ] `components/badge.rs`
-- [ ] `components/avatar.rs`
-- [ ] `components/separator.rs`
-- [ ] `components/skeleton.rs`
-- [ ] `components/progress.rs`
-- [ ] `components/kbd.rs`
-- [ ] `components/typography.rs`
-- [ ] `components/table.rs`
-- [ ] `components/scroll_area.rs`
-- [ ] `components/textarea.rs`
-- [ ] `components/empty.rs`
+- [x] `components/badge.rs`
+- [x] `components/avatar.rs`
+- [x] `components/separator.rs`
+- [x] `components/skeleton.rs`
+- [x] `components/progress.rs`
+- [x] `components/kbd.rs`
+- [x] `components/typography.rs`
+- [x] `components/table.rs`
+- [x] `components/scroll_area.rs`
+- [x] `components/textarea.rs`
+- [x] `components/empty.rs`
 
 Files to update:
-- [ ] `components/mod.rs` -- add 11 module declarations + re-exports
-- [ ] `crates/cli/src/component_sources.rs` -- add 11 include_str entries
-- [ ] `crates/registry/src/lib.rs` -- add 11 ComponentMeta entries, bump version
-- [ ] `docs/roadmap.md` -- move Spinner to Phase 6, update counts
+- [x] `components/mod.rs` -- add 11 module declarations + re-exports
+- [x] `crates/cli/src/component_sources.rs` -- add 11 include_str entries
+- [x] `crates/registry/src/lib.rs` -- add 11 ComponentMeta entries, bump version
+- [x] `docs/roadmap.md` -- move Spinner to Phase 6, update counts

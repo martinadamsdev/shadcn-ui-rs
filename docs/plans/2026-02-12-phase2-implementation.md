@@ -450,18 +450,18 @@ All agents run in parallel. After completion, team lead updates integration file
 ## File Checklist
 
 New files to create:
-- [ ] `components/alert.rs`
-- [ ] `components/alert_dialog.rs`
-- [ ] `components/tooltip.rs`
-- [ ] `components/popover.rs`
-- [ ] `components/hover_card.rs`
-- [ ] `components/dropdown_menu.rs`
-- [ ] `components/sheet.rs`
-- [ ] `components/drawer.rs`
-- [ ] `components/toast.rs`
-- [ ] `components/sonner.rs`
+- [x] `components/alert.rs`
+- [x] `components/alert_dialog.rs`
+- [x] `components/tooltip.rs`
+- [x] `components/popover.rs`
+- [x] `components/hover_card.rs`
+- [x] `components/dropdown_menu.rs`
+- [x] `components/sheet.rs`
+- [x] `components/drawer.rs`
+- [x] `components/toast.rs`
+- [x] `components/sonner.rs`
 
 Files to update:
-- [ ] `components/mod.rs` -- add 10 module declarations + re-exports
-- [ ] `crates/cli/src/component_sources.rs` -- add 10 include_str entries
-- [ ] `crates/registry/src/lib.rs` -- add 10 ComponentMeta entries, bump version
+- [x] `components/mod.rs` -- add 10 module declarations + re-exports
+- [x] `crates/cli/src/component_sources.rs` -- add 10 include_str entries
+- [x] `crates/registry/src/lib.rs` -- add 10 ComponentMeta entries, bump version

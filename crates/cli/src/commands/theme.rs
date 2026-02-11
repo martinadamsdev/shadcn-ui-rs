@@ -445,7 +445,11 @@ fn generate_theme_rs_from_custom_toml(name: &str, toml_content: &str) -> Result<
 
     let fmt = |hsl_str: &str| -> Result<String> {
         let (h, s, l) = parse_hsl(hsl_str)?;
-        Ok(format!("hsl({}, {}, {})", h, s, l))
+        fn f(v: f32) -> String {
+            let s = format!("{v}");
+            if s.contains('.') { s } else { format!("{v}.0") }
+        }
+        Ok(format!("hsl({}, {}, {})", f(h), f(s), f(l)))
     };
 
     let l = &custom.light;
@@ -497,6 +501,7 @@ pub struct Theme {{
 impl Global for Theme {{}}
 
 /// Theme color palette.
+#[derive(Debug, Clone)]
 pub struct ThemeColors {{
     pub background: Hsla,
     pub foreground: Hsla,

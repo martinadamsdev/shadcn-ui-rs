@@ -21,11 +21,11 @@
 //!     )
 //! ```
 
-use crate::theme::Theme;
 use gpui::{
-    AnyElement, App, FontWeight, IntoElement, ParentElement, RenderOnce, SharedString, Styled,
-    Window, div,
+    div, prelude::*, AnyElement, App, FontWeight, IntoElement, ParentElement, RenderOnce,
+    SharedString, Styled, Window,
 };
+use crate::theme::Theme;
 
 /// Card container component.
 ///
