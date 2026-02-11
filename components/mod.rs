@@ -68,3 +68,29 @@ pub use sheet::{Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader,
 pub use sonner::{Sonner, SonnerPosition, SonnerToast, SonnerVariant};
 pub use toast::{Toast, ToastVariant};
 pub use tooltip::{Tooltip, TooltipSide};
+
+// Phase 3
+pub mod avatar;
+pub mod badge;
+pub mod empty;
+pub mod kbd;
+pub mod progress;
+pub mod scroll_area;
+pub mod separator;
+pub mod skeleton;
+pub mod table;
+pub mod textarea;
+pub mod typography;
+
+// Phase 3 re-exports
+pub use avatar::{Avatar, AvatarSize};
+pub use badge::{Badge, BadgeVariant};
+pub use empty::Empty;
+pub use kbd::Kbd;
+pub use progress::Progress;
+pub use scroll_area::{ScrollArea, ScrollOrientation};
+pub use separator::{Separator, SeparatorOrientation};
+pub use skeleton::Skeleton;
+pub use table::{Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow};
+pub use textarea::Textarea;
+pub use typography::{Blockquote, H1, H2, H3, H4, InlineCode, Lead, Paragraph};
