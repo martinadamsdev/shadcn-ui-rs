@@ -25,7 +25,7 @@
 use std::rc::Rc;
 
 use gpui::prelude::*;
-use gpui::{div, px, App, Div, ElementId, IntoElement, Stateful, Window};
+use gpui::{App, Div, ElementId, IntoElement, Stateful, Window, div, px};
 
 use crate::theme::Theme;
 
@@ -110,10 +110,7 @@ impl Slider {
     }
 
     /// Register a callback for when the value changes.
-    pub fn on_change(
-        mut self,
-        handler: impl Fn(f32, &mut Window, &mut App) + 'static,
-    ) -> Self {
+    pub fn on_change(mut self, handler: impl Fn(f32, &mut Window, &mut App) + 'static) -> Self {
         self.on_change = Some(Rc::new(handler));
         self
     }

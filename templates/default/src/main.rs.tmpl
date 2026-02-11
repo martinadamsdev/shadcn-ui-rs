@@ -1,0 +1,46 @@
+use gpui::*;
+use gpui::prelude::FluentBuilder as _;
+
+mod theme;
+
+struct RootView;
+
+impl Render for RootView {
+    fn render(&mut self, _window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+        let theme = cx.global::<theme::Theme>();
+        let colors = &theme.colors;
+
+        div()
+            .size_full()
+            .flex()
+            .items_center()
+            .justify_center()
+            .bg(colors.background)
+            .text_color(colors.foreground)
+            .child(
+                div()
+                    .text_xl()
+                    .font_weight(FontWeight::BOLD)
+                    .child("Welcome to {{project_name}}"),
+            )
+    }
+}
+
+fn main() {
+    Application::new().run(|cx| {
+        cx.set_global(theme::{{base_color}}(theme::ThemeMode::Light));
+
+        cx.open_window(
+            WindowOptions {
+                window_bounds: Some(WindowBounds::Windowed(Bounds::centered(
+                    None,
+                    size(px(800.0), px(600.0)),
+                    cx,
+                ))),
+                ..Default::default()
+            },
+            |_window, cx| cx.new(|_cx| RootView),
+        )
+        .unwrap();
+    });
+}

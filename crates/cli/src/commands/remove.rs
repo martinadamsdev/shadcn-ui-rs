@@ -4,7 +4,7 @@
 
 use std::path::PathBuf;
 
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result, bail};
 use clap::Args;
 use dialoguer::Confirm;
 use shadcn_ui_registry::default_registry;
@@ -19,18 +19,22 @@ pub struct RemoveArgs {
 
 pub async fn run(args: RemoveArgs) -> Result<()> {
     if args.components.is_empty() {
-        bail!("Please specify component names to remove.\n\nUsage: shadcn-ui remove <component...>");
+        bail!(
+            "Please specify component names to remove.\n\nUsage: shadcn-ui remove <component...>"
+        );
     }
 
-    let config = Config::load(&PathBuf::from(".")).context(
-        "No shadcn-ui.toml found. Run `shadcn-ui init` first.",
-    )?;
+    let config = Config::load(&PathBuf::from("."))
+        .context("No shadcn-ui.toml found. Run `shadcn-ui init` first.")?;
 
     let registry = default_registry();
     let components_path = PathBuf::from(&config.project.components_dir);
 
     if !components_path.exists() {
-        bail!("Components directory does not exist: {}", config.project.components_dir);
+        bail!(
+            "Components directory does not exist: {}",
+            config.project.components_dir
+        );
     }
 
     // Warn about components that depend on the ones being removed
@@ -70,9 +74,8 @@ pub async fn run(args: RemoveArgs) -> Result<()> {
     for name in &args.components {
         let file_path = components_path.join(format!("{}.rs", name));
         if file_path.exists() {
-            std::fs::remove_file(&file_path).with_context(|| {
-                format!("Failed to remove {}", file_path.display())
-            })?;
+            std::fs::remove_file(&file_path)
+                .with_context(|| format!("Failed to remove {}", file_path.display()))?;
             println!("  - Removed {}.rs", name);
             removed_count += 1;
         } else {

@@ -14,7 +14,7 @@
 use std::rc::Rc;
 
 use gpui::prelude::*;
-use gpui::{div, px, App, ClickEvent, Div, ElementId, IntoElement, Stateful, Window};
+use gpui::{App, ClickEvent, Div, ElementId, IntoElement, Stateful, Window, div, px};
 
 use crate::theme::Theme;
 
@@ -66,10 +66,7 @@ impl Switch {
 
     /// Register a callback for when the switch is toggled.
     /// The callback receives the new checked state.
-    pub fn on_change(
-        mut self,
-        handler: impl Fn(bool, &mut Window, &mut App) + 'static,
-    ) -> Self {
+    pub fn on_change(mut self, handler: impl Fn(bool, &mut Window, &mut App) + 'static) -> Self {
         self.on_change = Some(Rc::new(handler));
         self
     }

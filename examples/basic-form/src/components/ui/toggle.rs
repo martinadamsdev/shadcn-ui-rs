@@ -15,11 +15,11 @@
 //!     .child("B")
 //! ```
 
+use crate::theme::Theme;
 use gpui::{
     AnyElement, App, ClickEvent, ElementId, FontWeight, Hsla, IntoElement, ParentElement,
     RenderOnce, Styled, Window, div, prelude::*,
 };
-use crate::theme::Theme;
 
 /// Toggle visual variant
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
@@ -191,7 +191,9 @@ impl RenderOnce for Toggle {
         }
 
         // Click handler
-        if !self.disabled && let Some(on_press_change) = self.on_press_change {
+        if !self.disabled
+            && let Some(on_press_change) = self.on_press_change
+        {
             let new_pressed = !self.pressed;
             el = el.on_click(
                 move |_event: &ClickEvent, window: &mut Window, cx: &mut App| {

@@ -3,6 +3,7 @@
 use clap::{Parser, Subcommand};
 
 mod commands;
+pub mod component_sources;
 pub mod config;
 
 #[derive(Parser)]

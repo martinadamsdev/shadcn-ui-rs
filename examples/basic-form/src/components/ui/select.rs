@@ -23,8 +23,8 @@ use std::rc::Rc;
 
 use gpui::prelude::*;
 use gpui::{
-    div, px, App, ClickEvent, Div, ElementId, IntoElement, MouseDownEvent, SharedString, Stateful,
-    Window,
+    App, ClickEvent, Div, ElementId, IntoElement, MouseDownEvent, SharedString, Stateful, Window,
+    div, px,
 };
 
 use crate::theme::Theme;
@@ -132,10 +132,7 @@ impl Select {
     }
 
     /// Register a callback for when the selected value changes.
-    pub fn on_change(
-        mut self,
-        handler: impl Fn(&str, &mut Window, &mut App) + 'static,
-    ) -> Self {
+    pub fn on_change(mut self, handler: impl Fn(&str, &mut Window, &mut App) + 'static) -> Self {
         self.on_change = Some(Rc::new(handler));
         self
     }
@@ -221,12 +218,11 @@ impl RenderOnce for Select {
                     })
                     .child(display_text)
                     // Chevron indicator
-                    .child(
-                        div()
-                            .text_xs()
-                            .text_color(muted_fg)
-                            .child(if open { "\u{25B2}" } else { "\u{25BC}" }),
-                    ),
+                    .child(div().text_xs().text_color(muted_fg).child(if open {
+                        "\u{25B2}"
+                    } else {
+                        "\u{25BC}"
+                    })),
             )
             // Dropdown popover (only visible when open)
             .when(open, |el| {
@@ -362,8 +358,7 @@ mod tests {
 
     #[test]
     fn test_select_selected_label_none() {
-        let select = Select::new("test")
-            .child(SelectItem::new("a", "Alpha"));
+        let select = Select::new("test").child(SelectItem::new("a", "Alpha"));
 
         assert!(select.selected_label().is_none());
     }

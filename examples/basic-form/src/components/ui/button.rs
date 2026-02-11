@@ -15,8 +15,8 @@
 
 use gpui::prelude::*;
 use gpui::{
-    div, px, rems, App, ClickEvent, Div, ElementId, FontWeight, Hsla, IntoElement, SharedString,
-    Stateful, Window,
+    App, ClickEvent, Div, ElementId, FontWeight, Hsla, IntoElement, SharedString, Stateful, Window,
+    div, px, rems,
 };
 
 use crate::theme::{Radius, Theme};
@@ -130,12 +130,7 @@ impl RenderOnce for Button {
                 transparent(),
                 colors.accent,
             ),
-            ButtonVariant::Link => (
-                transparent(),
-                colors.primary,
-                transparent(),
-                transparent(),
-            ),
+            ButtonVariant::Link => (transparent(), colors.primary, transparent(), transparent()),
             ButtonVariant::Destructive => (
                 colors.destructive,
                 colors.destructive_foreground,

@@ -5,12 +5,15 @@ members = [
     "crates/theme",
     "crates/registry",
 ]
+exclude = [
+    "examples/basic-form",
+]
 
 [workspace.package]
 version = "0.1.0"
 edition = "2024"
 license = "Apache-2.0"
-repository = "https://github.com/user/shadcn-ui-rs"
+repository = "https://github.com/martinadamsdev/shadcn-ui-rs"
 rust-version = "1.93.0"
 
 [workspace.dependencies]

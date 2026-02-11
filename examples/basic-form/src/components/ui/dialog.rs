@@ -51,11 +51,11 @@
 
 use std::rc::Rc;
 
+use crate::theme::Theme;
 use gpui::{
     AnyElement, App, ClickEvent, ElementId, FontWeight, IntoElement, KeyDownEvent, ParentElement,
     RenderOnce, SharedString, Styled, Window, deferred, div, prelude::*,
 };
-use crate::theme::Theme;
 
 /// Dialog root component.
 ///

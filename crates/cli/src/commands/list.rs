@@ -26,7 +26,9 @@ pub async fn run(args: ListArgs) -> Result<()> {
         if installed_components.is_empty() {
             println!("No components installed.");
             println!();
-            println!("Run `shadcn-ui init` to set up your project, then use `shadcn-ui add <component>` to install components.");
+            println!(
+                "Run `shadcn-ui init` to set up your project, then use `shadcn-ui add <component>` to install components."
+            );
             return Ok(());
         }
 

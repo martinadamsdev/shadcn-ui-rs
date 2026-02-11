@@ -17,7 +17,7 @@
 use std::rc::Rc;
 
 use gpui::prelude::*;
-use gpui::{div, px, App, ClickEvent, ElementId, IntoElement, SharedString, Window};
+use gpui::{App, ClickEvent, ElementId, IntoElement, SharedString, Window, div, px};
 
 use crate::theme::Theme;
 
@@ -88,10 +88,7 @@ impl RadioGroup {
 
     /// Register a callback invoked when the user selects a different option.
     /// The callback receives the value string of the newly selected item.
-    pub fn on_change(
-        mut self,
-        handler: impl Fn(&str, &mut Window, &mut App) + 'static,
-    ) -> Self {
+    pub fn on_change(mut self, handler: impl Fn(&str, &mut Window, &mut App) + 'static) -> Self {
         self.on_change = Some(Rc::new(handler));
         self
     }
@@ -127,12 +124,8 @@ impl RenderOnce for RadioGroup {
         let on_change = self.on_change;
         let group_disabled = self.disabled;
 
-        div()
-            .id(self.id)
-            .flex()
-            .flex_col()
-            .gap(px(8.0))
-            .children(self.items.into_iter().enumerate().map(move |(i, item)| {
+        div().id(self.id).flex().flex_col().gap(px(8.0)).children(
+            self.items.into_iter().enumerate().map(move |(i, item)| {
                 let is_selected = selected
                     .as_ref()
                     .is_some_and(|v| v.as_ref() == item.value.as_ref());
@@ -171,10 +164,7 @@ impl RenderOnce for RadioGroup {
                             .when(is_selected, |el| {
                                 el.child(
                                     // Inner filled dot
-                                    div()
-                                        .size(px(8.0))
-                                        .rounded(px(9999.0))
-                                        .bg(primary),
+                                    div().size(px(8.0)).rounded(px(9999.0)).bg(primary),
                                 )
                             }),
                     )
@@ -184,7 +174,8 @@ impl RenderOnce for RadioGroup {
                             .text_color(if is_disabled { muted_fg } else { foreground })
                             .child(item.label.clone()),
                     )
-            }))
+            }),
+        )
     }
 }
 

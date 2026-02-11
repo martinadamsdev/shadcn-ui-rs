@@ -9,7 +9,7 @@
 //! ```
 
 use gpui::prelude::*;
-use gpui::{div, App, FontWeight, IntoElement, SharedString, Window};
+use gpui::{App, FontWeight, IntoElement, SharedString, Window, div};
 
 use crate::theme::Theme;
 

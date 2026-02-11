@@ -64,16 +64,14 @@ impl Config {
         let path = config_path(project_dir);
         let content = std::fs::read_to_string(&path)
             .with_context(|| format!("Failed to read config file: {}", path.display()))?;
-        let config: Config =
-            toml::from_str(&content).context("Failed to parse shadcn-ui.toml")?;
+        let config: Config = toml::from_str(&content).context("Failed to parse shadcn-ui.toml")?;
         Ok(config)
     }
 
     /// Save configuration to a `shadcn-ui.toml` file in the given directory.
     pub fn save(&self, project_dir: &Path) -> Result<()> {
         let path = config_path(project_dir);
-        let content =
-            toml::to_string_pretty(self).context("Failed to serialize configuration")?;
+        let content = toml::to_string_pretty(self).context("Failed to serialize configuration")?;
         std::fs::write(&path, content)
             .with_context(|| format!("Failed to write config file: {}", path.display()))?;
         Ok(())

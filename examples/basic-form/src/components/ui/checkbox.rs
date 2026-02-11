@@ -13,7 +13,7 @@
 //! ```
 
 use gpui::prelude::*;
-use gpui::{div, px, rems, App, ElementId, IntoElement, Window};
+use gpui::{App, ElementId, IntoElement, Window, div, px, rems};
 
 use crate::theme::Theme;
 
@@ -47,10 +47,7 @@ impl Checkbox {
         self
     }
 
-    pub fn on_toggle(
-        mut self,
-        handler: impl Fn(bool, &mut Window, &mut App) + 'static,
-    ) -> Self {
+    pub fn on_toggle(mut self, handler: impl Fn(bool, &mut Window, &mut App) + 'static) -> Self {
         self.on_toggle = Some(Box::new(handler));
         self
     }
@@ -86,13 +83,12 @@ impl RenderOnce for Checkbox {
 
         if checked {
             // Render a checkmark using a Unicode character
-            el = el
-                .child(
-                    div()
-                        .text_color(check_color)
-                        .text_size(rems(0.625))
-                        .child("✓"),
-                );
+            el = el.child(
+                div()
+                    .text_color(check_color)
+                    .text_size(rems(0.625))
+                    .child("✓"),
+            );
         }
 
         if disabled {
@@ -120,9 +116,7 @@ mod tests {
 
     #[test]
     fn test_checkbox_builder() {
-        let cb = Checkbox::new("test-cb")
-            .checked(true)
-            .disabled(true);
+        let cb = Checkbox::new("test-cb").checked(true).disabled(true);
 
         assert!(cb.checked);
         assert!(cb.disabled);

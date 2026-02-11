@@ -19,7 +19,7 @@
 //! ```
 
 use gpui::prelude::*;
-use gpui::{div, px, App, Div, ElementId, IntoElement, SharedString, Stateful, Window};
+use gpui::{App, Div, ElementId, IntoElement, SharedString, Stateful, Window, div, px};
 
 use crate::theme::{Radius, Theme};
 

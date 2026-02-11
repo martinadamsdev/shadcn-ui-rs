@@ -31,7 +31,7 @@ pub enum Radius {
 }
 
 impl Radius {
-    pub fn to_px(&self) -> f32 {
+    pub fn to_px(self) -> f32 {
         match self {
             Radius::None => 0.0,
             Radius::Sm => 4.0,

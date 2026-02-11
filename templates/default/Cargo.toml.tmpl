@@ -1,0 +1,12 @@
+[package]
+name = "{{project_name}}"
+version = "0.1.0"
+edition = "2024"
+
+[workspace]
+
+[dependencies]
+gpui = "0.2.2"
+
+# Pin core-text to 21.0.0 to avoid core-graphics version conflict
+core-text = "=21.0.0"

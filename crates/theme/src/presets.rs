@@ -2,7 +2,7 @@
 //!
 //! Color values sourced from the official shadcn/ui base color definitions.
 
-use crate::{hsl, Theme, ThemeColors, ThemeMode, Radius};
+use crate::{Radius, Theme, ThemeColors, ThemeMode, hsl};
 
 /// Zinc theme (default) - cool gray with subtle blue tint
 pub fn zinc(mode: ThemeMode) -> Theme {
@@ -346,7 +346,10 @@ mod tests {
         for name in preset_names() {
             let theme = get_preset(name, ThemeMode::Light).unwrap();
             // All light themes have white background: hsl(0, 0%, 100%)
-            assert_eq!(theme.colors.background.l, 1.0, "{name} light background should be white");
+            assert_eq!(
+                theme.colors.background.l, 1.0,
+                "{name} light background should be white"
+            );
         }
     }
 
@@ -366,8 +369,14 @@ mod tests {
     fn test_neutral_has_zero_saturation() {
         let theme = neutral(ThemeMode::Light);
         // Neutral theme uses 0% saturation for primary colors
-        assert_eq!(theme.colors.primary.s, 0.0, "neutral primary should have 0 saturation");
-        assert_eq!(theme.colors.foreground.s, 0.0, "neutral foreground should have 0 saturation");
+        assert_eq!(
+            theme.colors.primary.s, 0.0,
+            "neutral primary should have 0 saturation"
+        );
+        assert_eq!(
+            theme.colors.foreground.s, 0.0,
+            "neutral foreground should have 0 saturation"
+        );
     }
 
     #[test]

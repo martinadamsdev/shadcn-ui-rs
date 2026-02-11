@@ -1,5 +1,5 @@
 # Generated files
-/target/
+target/
 Cargo.lock
 
 # IDE
@@ -11,6 +11,9 @@ Cargo.lock
 # OS
 .DS_Store
 Thumbs.db
+
+# Backup files
+*.bak
 
 # Local config
 shadcn-ui.local.toml

@@ -26,11 +26,11 @@
 //!     )
 //! ```
 
+use crate::theme::Theme;
 use gpui::{
     AnyElement, App, ClickEvent, ElementId, FontWeight, Hsla, IntoElement, ParentElement,
     RenderOnce, SharedString, Styled, Window, div, prelude::*,
 };
-use crate::theme::Theme;
 
 /// Selection mode for the toggle group
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
@@ -304,7 +304,9 @@ impl RenderOnce for ToggleGroupItem {
         }
 
         // Click handler
-        if !self.disabled && let Some(on_click) = self.on_click {
+        if !self.disabled
+            && let Some(on_click) = self.on_click
+        {
             el = el.on_click(
                 move |event: &ClickEvent, window: &mut Window, cx: &mut App| {
                     on_click(event, window, cx);
