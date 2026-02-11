@@ -12,9 +12,9 @@ Analysis of gpui 0.2.2 confirms the following APIs are available and will be use
 | Click outside dismiss | `.on_mouse_down_out()` | Select (Phase 1) |
 | Right-click events | `MouseButton::Right`, `ClickEvent::is_right_click()` | ContextMenu (Phase 4) |
 | Mouse position tracking | `MouseMoveEvent.position`, `MouseDownEvent.position` | Resizable, Slider, Carousel (Phase 5) |
-| Text input / IME | `InputHandler` trait, `EntityInputHandler` | Input, Textarea, Combobox (Phase 3) |
+| Text input / IME | `InputHandler` trait, `EntityInputHandler` | Input, Textarea, Combobox (Phase 5) |
 | Animation | `Animation`, `with_animation()`, easing functions | Sheet, Drawer, Toast (Phase 2) |
-| Custom painting | `canvas()`, `PathBuilder`, `window.paint_path()` | Chart (Phase 6) |
+| Custom painting | `canvas()`, `PathBuilder`, `window.paint_path()` | Chart, Spinner (Phase 6) |
 | Focus management | `FocusHandle`, `.track_focus()`, `window.focus_next()` | Tabs, Command, InputOTP (Phase 4-5) |
 | Scroll areas | `.overflow_y_scroll()` | ScrollArea, DataTable (Phase 3, 6) |
 | Keyboard events | `.on_key_down()` | Calendar, Command (Phase 5) |
@@ -60,48 +60,52 @@ Overlay and feedback components. Built on `deferred()` layered rendering and `wi
 
 ## Phase 3 -- v0.3.0
 
-Visual display components and editable text input.
+Visual display components. 11 components (Spinner deferred to Phase 6).
 
-### Components (12)
+### Components (11)
 
 - [ ] **Badge** -- Inline status label with variants
   - Variants: default, secondary, outline, destructive
   - Pure styled container, similar to Button without interactivity
-- [ ] **Avatar** -- User avatar with image or fallback initials
+- [ ] **Avatar** -- User avatar with fallback initials
   - Circular container with `rounded_full()`
   - Fallback to initials text when no image available
   - Size presets: sm, default, lg
 - [ ] **Separator** -- Horizontal or vertical dividing line
   - Single div with border, support `orientation` prop
-- [ ] **Skeleton** -- Loading placeholder with pulse animation
-  - Use `with_animation()` with `pulsating_between()` for opacity pulse
-  - Support arbitrary size via width/height props
+- [ ] **Skeleton** -- Static loading placeholder
+  - Muted background block with optional width/height
+  - Optional `rounded` flag for circular skeletons
 - [ ] **Progress** -- Horizontal progress bar
   - Two nested divs: track + filled portion
   - `value` prop (0.0-100.0) controls fill width
-- [ ] **Spinner** -- Loading spinner with rotation animation
-  - Use `with_animation()` with repeating rotation
-  - Custom paint via `canvas()` + `PathBuilder` for arc drawing
 - [ ] **Kbd** -- Keyboard shortcut display label
   - Styled inline container with monospace font and border
 - [ ] **Typography** -- Text styling presets (h1-h4, p, blockquote, code, etc.)
-  - Collection of styled text elements matching shadcn typography
+  - 8 independent structs: H1, H2, H3, H4, Paragraph, Blockquote, InlineCode, Lead
 - [ ] **Table** -- Data table with header, body, rows, and cells
-  - Flex-based layout: TableHeader, TableBody, TableRow, TableCell
-  - Support column alignment and fixed header
+  - Pure flex-based layout: Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption
 - [ ] **ScrollArea** -- Scrollable container with styled scrollbar
   - Wrap GPUI's `.overflow_y_scroll()` with themed styling
   - Optional horizontal scroll
 - [ ] **Textarea** -- Multi-line text display (display-only, upgraded in Phase 5)
   - Multi-line variant of Input with min/max rows
-- [ ] **Empty** -- Empty state placeholder with icon, title, and action
-  - Centered layout container with optional icon and action button
+- [ ] **Empty** -- Empty state placeholder with title, description, and action
+  - Centered layout container with optional description and action button
 
 ### Infrastructure
 
-- [ ] Add all 12 components to CLI registry
+- [ ] Add all 11 components to CLI registry
 - [ ] Unit tests for each component
-- [ ] Update docs/components.md with new component API references
+
+### Deferred Items
+
+| Item | Original Scope | Deferred To | Reason |
+|------|---------------|-------------|--------|
+| **Spinner** component | Phase 3 component | **Phase 6** (with Chart) | Requires `canvas()` + `PathBuilder` custom painting; Phase 6 Chart uses same APIs |
+| **Skeleton pulse animation** | `with_animation()` opacity pulse | **Phase 5** (with animation infrastructure) | Consistent with Phase 2 no-animation strategy; static placeholder shipped instead |
+| **Table column alignment** | Column align (left/center/right) | **Phase 6** (with DataTable) | Pure layout sufficient for Phase 3; alignment added when DataTable builds on Table |
+| **Avatar image support** | Image loading via `img()` | **Future enhancement** | GPUI image loading needs investigation; fallback initials cover common case |
 
 ---
 
@@ -239,8 +243,12 @@ Editable text input and advanced interactive components. Built on `InputHandler`
 
 Data visualization and complex data components. Built on `canvas()` and `PathBuilder` for custom rendering.
 
-### Components (3)
+### Components (4)
 
+- [ ] **Spinner** -- Loading spinner with rotation animation
+  - Use `with_animation()` with repeating rotation
+  - Custom paint via `canvas()` + `PathBuilder` for arc drawing
+  - Deferred from Phase 3: shares custom painting infrastructure with Chart
 - [ ] **Chart** -- Data visualization charts
   - Use `canvas()` element for custom paint area
   - Use `PathBuilder` with `line_to()`, `curve_to()` for drawing lines, areas
@@ -319,8 +327,8 @@ The following shadcn/ui components are not planned due to limited value in a des
 |---------|-------|------------|-------|
 | v0.1.0 | Phase 1 ✅ | 12 core components | 12 |
 | v0.2.0 | Phase 2 ✅ | 10 overlay/feedback | 22 |
-| v0.3.0 | Phase 3 | 12 visual/display | 34 |
-| v0.4.0 | Phase 4 | 12 navigation/structure | 46 |
-| v0.5.0 | Phase 5 | 10 advanced interactive | 56 |
-| v0.6.0 | Phase 6 | 3 data visualization | 59 |
+| v0.3.0 | Phase 3 | 11 visual/display | 33 |
+| v0.4.0 | Phase 4 | 12 navigation/structure | 45 |
+| v0.5.0 | Phase 5 | 10 advanced interactive | 55 |
+| v0.6.0 | Phase 6 | 4 data visualization + spinner | 59 |
 | v1.0.0 | Phase 7 | Infrastructure + stability | 59 |
