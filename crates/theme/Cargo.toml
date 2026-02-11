@@ -1,0 +1,10 @@
+[package]
+name = "shadcn-ui-theme"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Theme system for shadcn-ui-rs"
+
+[dependencies]
+gpui.workspace = true
+serde.workspace = true

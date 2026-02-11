@@ -1,0 +1,23 @@
+[package]
+name = "shadcn-ui-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "CLI tool for shadcn-ui-rs - add beautiful UI components to your GPUI project"
+
+[[bin]]
+name = "shadcn-ui"
+path = "src/main.rs"
+
+[dependencies]
+clap.workspace = true
+dialoguer.workspace = true
+indicatif.workspace = true
+toml.workspace = true
+reqwest.workspace = true
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+
+shadcn-ui-registry = { path = "../registry" }
