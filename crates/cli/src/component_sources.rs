@@ -29,6 +29,18 @@ pub fn get_component_source(name: &str) -> Option<&'static str> {
         "drawer" => Some(include_str!("../../../components/drawer.rs")),
         "toast" => Some(include_str!("../../../components/toast.rs")),
         "sonner" => Some(include_str!("../../../components/sonner.rs")),
+        // Phase 3
+        "badge" => Some(include_str!("../../../components/badge.rs")),
+        "avatar" => Some(include_str!("../../../components/avatar.rs")),
+        "separator" => Some(include_str!("../../../components/separator.rs")),
+        "skeleton" => Some(include_str!("../../../components/skeleton.rs")),
+        "progress" => Some(include_str!("../../../components/progress.rs")),
+        "kbd" => Some(include_str!("../../../components/kbd.rs")),
+        "typography" => Some(include_str!("../../../components/typography.rs")),
+        "table" => Some(include_str!("../../../components/table.rs")),
+        "scroll_area" => Some(include_str!("../../../components/scroll_area.rs")),
+        "textarea" => Some(include_str!("../../../components/textarea.rs")),
+        "empty" => Some(include_str!("../../../components/empty.rs")),
         _ => None,
     }
 }
