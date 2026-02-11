@@ -10,7 +10,7 @@ Copy components directly into your Rust project. No wrapper crate, no runtime ov
 
 ## Status
 
-**v0.1.0** -- 12 foundational components, 5 theme presets, CLI tooling. See the [Roadmap](docs/roadmap.md) for upcoming phases (59 components planned through v1.0).
+**v0.2.0** -- 22 components (12 core + 10 overlay/feedback), 5 theme presets, CLI tooling. See the [Roadmap](docs/roadmap.md) for upcoming phases (59 components planned through v1.0).
 
 ## Quick Start
 
