@@ -2,75 +2,353 @@
 
 This document outlines the planned development phases for shadcn-ui-rs.
 
-## Phase 1 -- v0.1.0 (Current)
+## GPUI Capability Baseline
 
-Core foundation: CLI tooling, theme system, and 12 essential components.
+Analysis of gpui 0.2.2 confirms the following APIs are available and will be used throughout:
 
-- **CLI**: init, add, remove, list, diff, update, theme commands
-- **Theme system**: 5 presets (zinc, slate, stone, gray, neutral) with light/dark mode
-- **Components (12)**: Button, Input, Label, Checkbox, Radio, Switch, Slider, Select, Toggle, ToggleGroup, Card, Dialog
-
-## Phase 2 -- v0.2.0
-
-Overlay and feedback components. These all use GPUI's `deferred()` rendering for layered display with absolute positioning and `on_mouse_down_out()` dismissal -- patterns already validated by the Dialog and Select components.
-
-- **Components (10)**: AlertDialog, Tooltip, Popover, HoverCard, Sheet, Drawer, DropdownMenu, Toast, Sonner, Alert
-- Focus areas: layered rendering with `deferred()`, timed dismissal, slide-in positioning
-
-## Phase 3 -- v0.3.0
-
-Visual and data display components. Pure layout or simple state-driven rendering, all within GPUI's proven flex/styling capabilities.
-
-- **Components (12)**: Badge, Avatar, Separator, Skeleton, Progress, Spinner, Empty, Kbd, Typography, Table, ScrollArea, Textarea
-- Focus areas: `overflow_y_scroll()` for ScrollArea, flex-based table layout
-
-## Phase 4 -- v0.4.0
-
-Navigation and interaction pattern components. Click-driven panel switching, conditional rendering, and simple keyboard event handling via `on_key_down()`.
-
-- **Components (8)**: Tabs, Accordion, Collapsible, Breadcrumb, Pagination, ButtonGroup, Field, Item
-- Focus areas: active tab tracking, expand/collapse state management
-
-## Phase 5 -- v0.5.0
-
-Platform integration. Components requiring deeper GPUI integration or custom `Element` implementations for features beyond standard div-based rendering.
-
-- **Interactive Slider**: Drag interaction via custom GPUI `Element` with hit-testing
-- **Editable Input / Textarea**: Platform text input integration (e.g. `gpui::TextInput`)
-- **NativeSelect**: Native OS select dropdown
-- Focus areas: custom `Element` trait implementations, platform API integration
-
-## Phase 6 -- v1.0.0
-
-Polish, infrastructure, and stable release.
-
-- **Registry server**: HTTP API for component distribution
-- **Documentation site**: Built with mdbook, hosted publicly
-- **crates.io publication**: Publish CLI and theme crates
-- **Homebrew formula**: `brew install shadcn-ui-rs`
-- **CI/CD**: GitHub Actions for testing, linting, and release automation
-- **Stability**: API stabilization, comprehensive test coverage, performance benchmarks
+| Capability | GPUI API | Used By |
+|------------|----------|---------|
+| Layered rendering | `deferred()` + `.with_priority()` | Dialog, Select (Phase 1) |
+| Click outside dismiss | `.on_mouse_down_out()` | Select (Phase 1) |
+| Right-click events | `MouseButton::Right`, `ClickEvent::is_right_click()` | ContextMenu (Phase 4) |
+| Mouse position tracking | `MouseMoveEvent.position`, `MouseDownEvent.position` | Resizable, Slider, Carousel (Phase 5) |
+| Text input / IME | `InputHandler` trait, `EntityInputHandler` | Input, Textarea, Combobox (Phase 3) |
+| Animation | `Animation`, `with_animation()`, easing functions | Sheet, Drawer, Toast (Phase 2) |
+| Custom painting | `canvas()`, `PathBuilder`, `window.paint_path()` | Chart (Phase 6) |
+| Focus management | `FocusHandle`, `.track_focus()`, `window.focus_next()` | Tabs, Command, InputOTP (Phase 4-5) |
+| Scroll areas | `.overflow_y_scroll()` | ScrollArea, DataTable (Phase 3, 6) |
+| Keyboard events | `.on_key_down()` | Calendar, Command (Phase 5) |
 
 ---
 
-## Components Not Planned for Port
+## Phase 1 -- v0.1.0 (Current) ✅
 
-The following shadcn/ui components are not suitable for a GPUI port due to fundamental framework limitations. They are excluded from the roadmap unless GPUI adds the required capabilities in a future release.
+Core foundation: CLI tooling, theme system, and 12 essential components.
+
+### Completed
+
+- [x] CLI: init, add, remove, list, diff, update, theme commands
+- [x] Theme system: 5 presets (zinc, slate, stone, gray, neutral) with light/dark mode
+- [x] Components: Button, Input (display-only), Label, Checkbox, Radio, Switch, Slider (display-only), Select, Toggle, ToggleGroup, Card, Dialog
+- [x] Example project: basic-form with all 12 components
+- [x] Documentation: getting-started, components, theming guides
+- [x] LICENSE, CHANGELOG, CONTRIBUTING
+
+---
+
+## Phase 2 -- v0.2.0
+
+Overlay and feedback components. Built on `deferred()` layered rendering and `with_animation()` for transitions.
+
+### Components (10)
+
+- [ ] **Alert** -- Static alert box with icon, title, and description
+  - Variants: default, destructive
+  - Pure layout component, no interactivity
+- [ ] **AlertDialog** -- Modal confirmation dialog with action/cancel buttons
+  - Reuse Dialog backdrop and deferred rendering
+  - Add `on_confirm` / `on_cancel` callbacks
+- [ ] **Tooltip** -- Hover-triggered overlay with text content
+  - Use `deferred()` for rendering above content
+  - Position relative to trigger element using `Bounds` from layout
+  - Show/hide on hover with optional delay
+- [ ] **Popover** -- Click-triggered overlay with arbitrary content
+  - Same positioning strategy as Tooltip
+  - Dismiss with `on_mouse_down_out()`
+  - Support `side` and `align` options
+- [ ] **HoverCard** -- Hover-triggered card overlay with rich content
+  - Same as Tooltip but accepts child elements
+- [ ] **DropdownMenu** -- Click-triggered menu with items, separators, and sub-menus
+  - Extend Select's dropdown pattern
+  - Add support for groups, labels, separators, keyboard navigation
+- [ ] **Sheet** -- Slide-in overlay panel from screen edge
+  - Use `deferred()` + absolute positioning
+  - Animate slide-in/out with `with_animation()` and `ease_in_out`
+  - Support `side`: top, right, bottom, left
+- [ ] **Drawer** -- Bottom sheet variant of Sheet
+  - Reuse Sheet implementation with `side: bottom` default
+- [ ] **Toast** -- Temporary notification with auto-dismiss
+  - Use `deferred()` for rendering at screen corner
+  - Timer-based auto-dismiss via `cx.spawn()` with delay
+  - Support action button and close button
+- [ ] **Sonner** -- Stacked toast notification system
+  - Toast manager for queuing/stacking multiple toasts
+  - Track toast list state, animate stack positioning
+
+### Infrastructure
+
+- [ ] Shared `Overlay` utility for deferred + positioned rendering
+- [ ] Shared `Dismissable` behavior (click outside, escape key)
+- [ ] Animation helpers: slide-in, fade-in, scale-in
+- [ ] Add all 10 components to CLI registry (`component_sources.rs`)
+- [ ] Unit tests for each component builder
+- [ ] Update example project to demonstrate overlay components
+
+---
+
+## Phase 3 -- v0.3.0
+
+Visual display components and editable text input.
+
+### Components (12)
+
+- [ ] **Badge** -- Inline status label with variants
+  - Variants: default, secondary, outline, destructive
+  - Pure styled container, similar to Button without interactivity
+- [ ] **Avatar** -- User avatar with image or fallback initials
+  - Circular container with `rounded_full()`
+  - Fallback to initials text when no image available
+  - Size presets: sm, default, lg
+- [ ] **Separator** -- Horizontal or vertical dividing line
+  - Single div with border, support `orientation` prop
+- [ ] **Skeleton** -- Loading placeholder with pulse animation
+  - Use `with_animation()` with `pulsating_between()` for opacity pulse
+  - Support arbitrary size via width/height props
+- [ ] **Progress** -- Horizontal progress bar
+  - Two nested divs: track + filled portion
+  - `value` prop (0.0-100.0) controls fill width
+- [ ] **Spinner** -- Loading spinner with rotation animation
+  - Use `with_animation()` with repeating rotation
+  - Custom paint via `canvas()` + `PathBuilder` for arc drawing
+- [ ] **Kbd** -- Keyboard shortcut display label
+  - Styled inline container with monospace font and border
+- [ ] **Typography** -- Text styling presets (h1-h4, p, blockquote, code, etc.)
+  - Collection of styled text elements matching shadcn typography
+- [ ] **Table** -- Data table with header, body, rows, and cells
+  - Flex-based layout: TableHeader, TableBody, TableRow, TableCell
+  - Support column alignment and fixed header
+- [ ] **ScrollArea** -- Scrollable container with styled scrollbar
+  - Wrap GPUI's `.overflow_y_scroll()` with themed styling
+  - Optional horizontal scroll
+- [ ] **Textarea** -- Multi-line text display (display-only, upgraded in Phase 5)
+  - Multi-line variant of Input with min/max rows
+- [ ] **Empty** -- Empty state placeholder with icon, title, and action
+  - Centered layout container with optional icon and action button
+
+### Infrastructure
+
+- [ ] Add all 12 components to CLI registry
+- [ ] Unit tests for each component
+- [ ] Update docs/components.md with new component API references
+
+---
+
+## Phase 4 -- v0.4.0
+
+Navigation and structural components. Click-driven panel switching, focus management with `FocusHandle`, and right-click context menus.
+
+### Components (12)
+
+- [ ] **Tabs** -- Tabbed content panels
+  - TabsList + TabsTrigger + TabsContent pattern
+  - Track active tab state, show/hide panels
+  - Keyboard navigation: arrow keys between tabs via `on_key_down()`
+  - Focus management with `FocusHandle` and `.track_focus()`
+- [ ] **Accordion** -- Expandable/collapsible content sections
+  - Single or multiple open sections
+  - Animate expand/collapse height with `with_animation()`
+  - AccordionItem + AccordionTrigger + AccordionContent pattern
+- [ ] **Collapsible** -- Single expandable section
+  - Simplified Accordion for a single section
+  - `open` state prop with `on_open_change` callback
+- [ ] **Breadcrumb** -- Navigation path indicator
+  - BreadcrumbList + BreadcrumbItem + BreadcrumbSeparator
+  - Each item clickable with `on_click` callback
+- [ ] **Pagination** -- Page navigation controls
+  - Previous/Next buttons + page number buttons
+  - `current_page`, `total_pages` props
+  - `on_page_change` callback
+- [ ] **ButtonGroup** -- Grouped buttons with connected borders
+  - Container that merges adjacent Button borders
+  - Support horizontal and vertical orientation
+- [ ] **Field** -- Form field wrapper with label, input, description, and error
+  - Composite layout: Label + slot + description/error text
+  - Error state styling
+- [ ] **ContextMenu** -- Right-click triggered menu
+  - Use `on_mouse_down(MouseButton::Right, ...)` to capture position
+  - Use `MouseDownEvent.position` for menu placement
+  - Reuse DropdownMenu rendering for menu items
+  - Dismiss with `on_mouse_down_out()` and Escape key
+- [ ] **Menubar** -- Application menu bar with dropdown menus
+  - Horizontal bar with MenubarMenu + MenubarTrigger + MenubarContent
+  - Hover-to-switch between open menus when one is already open
+  - Keyboard navigation: arrow keys between menus, up/down within menus
+  - Focus trapping with `FocusHandle`
+- [ ] **NavigationMenu** -- Multi-level navigation with dropdown panels
+  - Similar to Menubar but with wider content panels
+  - Support links, groups, and descriptions within panels
+- [ ] **Sidebar** -- Collapsible side navigation panel
+  - Fixed-width panel with collapse toggle
+  - Animate width change with `with_animation()`
+  - Support SidebarHeader, SidebarContent, SidebarFooter sections
+- [ ] **Item** -- Generic list item with icon, label, and action
+  - Reusable row component for menus, lists, sidebars
+
+### Infrastructure
+
+- [ ] Shared `Menu` utility for DropdownMenu, ContextMenu, Menubar
+- [ ] Shared `FocusGroup` helper for keyboard navigation patterns
+- [ ] Focus trap utility: keep focus within a container (for dialogs, menus)
+- [ ] Unit tests for all 12 components
+- [ ] Update CLI registry with all new components
+
+---
+
+## Phase 5 -- v0.5.0
+
+Editable text input and advanced interactive components. Built on `InputHandler` for text editing, `MouseMoveEvent` for drag tracking, and `FocusHandle` for multi-field focus control.
+
+### Components (10)
+
+- [ ] **Editable Input** -- Upgrade Phase 1 Input to support real text editing
+  - Implement `EntityInputHandler` trait for the Input view
+  - Handle `replace_text_in_range()` for character input
+  - Handle `selected_text_range()` for cursor position
+  - Support IME composition via `marked_text_range()` / `replace_and_mark_text_in_range()`
+  - Call `window.handle_input()` during paint to activate platform text input
+  - Cursor rendering with blink animation via `with_animation()`
+  - Text selection rendering
+- [ ] **Editable Textarea** -- Upgrade Phase 3 Textarea with text editing
+  - Multi-line version of editable Input
+  - Line wrapping and scroll when content exceeds visible area
+- [ ] **Interactive Slider** -- Upgrade Phase 1 Slider with drag interaction
+  - Track mouse position via `MouseMoveEvent.position` during drag
+  - Calculate value from element-relative position using `Bounds`
+  - Use `on_mouse_down()` to start drag, `on_mouse_up()` to end
+- [ ] **Combobox** -- Searchable select dropdown
+  - Combine editable Input + Select dropdown
+  - Filter items in real-time as user types
+  - Keyboard navigation through filtered results
+- [ ] **Command** -- Command palette with fuzzy search
+  - Full-screen centered overlay (like Dialog)
+  - Editable Input at top for search query
+  - Fuzzy search against command list using string matching
+  - Keyboard up/down to navigate, Enter to select, Escape to close
+  - CommandInput + CommandList + CommandGroup + CommandItem pattern
+- [ ] **Calendar** -- Month calendar with date selection
+  - 7-column grid layout for day cells
+  - Month/year navigation with previous/next buttons
+  - `on_select` callback with selected date
+  - Keyboard navigation: arrow keys across dates via `on_key_down()`
+  - Focus management with `FocusHandle` for active date cell
+- [ ] **DatePicker** -- Date input with calendar dropdown
+  - Combine editable Input + Popover + Calendar
+  - Display selected date in input, open calendar on click/focus
+  - Parse typed date strings
+- [ ] **InputOTP** -- One-time password input with individual character slots
+  - Multiple single-character input slots
+  - Implement `InputHandler` per slot
+  - Auto-advance focus to next slot via `FocusHandle.focus()`
+  - Paste support: distribute pasted characters across slots
+- [ ] **Carousel** -- Slideable content container
+  - Horizontal scroll container with snapping
+  - Previous/Next arrow button navigation
+  - Animate slide transition with `with_animation()` and `ease_in_out`
+  - Optional: drag scroll via `MouseMoveEvent` position tracking
+- [ ] **Resizable** -- Resizable split panels
+  - ResizablePanelGroup + ResizablePanel + ResizableHandle
+  - Track handle drag via `MouseMoveEvent.position`
+  - Calculate panel size deltas from mouse movement
+  - Constrain with min/max panel sizes
+  - Horizontal and vertical orientation support
+
+### Infrastructure
+
+- [ ] Shared `TextEditor` core for Input and Textarea text editing
+- [ ] Shared `DragTracker` utility for mouse position tracking during drag
+- [ ] Fuzzy search utility for Command and Combobox filtering
+- [ ] Date utilities: month grid generation, date arithmetic
+- [ ] Unit tests and integration tests for all interactive components
+- [ ] Update example project with interactive demos
+
+---
+
+## Phase 6 -- v0.6.0
+
+Data visualization and complex data components. Built on `canvas()` and `PathBuilder` for custom rendering.
+
+### Components (3)
+
+- [ ] **Chart** -- Data visualization charts
+  - Use `canvas()` element for custom paint area
+  - Use `PathBuilder` with `line_to()`, `curve_to()` for drawing lines, areas
+  - Use `window.paint_path()` for rendering filled/stroked paths
+  - Support chart types: Line, Bar, Area (pie requires arc calculations)
+  - Axis labels and grid lines via positioned text elements
+  - Tooltip on hover showing data point values
+  - ChartContainer + ChartConfig pattern
+- [ ] **DataTable** -- Full-featured data table
+  - Build on Phase 3 Table component
+  - Column sorting: click header to toggle asc/desc
+  - Row selection: checkbox column with select all
+  - Column resizing: drag column border using `MouseMoveEvent` tracking
+  - Pagination: integrate with Phase 4 Pagination component
+  - Virtualized scroll via ScrollArea for large datasets
+- [ ] **NativeSelect** -- OS-native dropdown selector
+  - Platform-specific native select widget integration
+  - Fallback to Phase 1 Select if native API unavailable
+
+### Infrastructure
+
+- [ ] Chart rendering engine: axis calculation, scale mapping, data point layout
+- [ ] Virtual scroll utility: render only visible rows for large datasets
+- [ ] Unit tests for chart rendering and data table features
+
+---
+
+## Phase 7 -- v1.0.0
+
+Polish, infrastructure, and stable release.
+
+### Release Infrastructure
+
+- [ ] **Registry server**: HTTP API for component distribution
+  - REST endpoints: `/components`, `/components/:name`, `/themes`
+  - Serve latest component source code
+  - Version tracking per component
+- [ ] **Documentation site**: Built with mdbook, hosted publicly
+  - Component showcase with live preview screenshots
+  - API reference generated from doc comments
+  - Migration guide from shadcn/ui (React) patterns
+- [ ] **crates.io publication**: Publish CLI and theme crates
+  - `shadcn-ui-cli` binary crate
+  - `shadcn-ui-theme` library crate
+  - Versioned releases with changelogs
+- [ ] **Homebrew formula**: `brew install shadcn-ui-rs`
+- [ ] **CI/CD**: GitHub Actions
+  - Test matrix: macOS (primary), Linux (future GPUI support)
+  - Automated clippy, fmt, test on PR
+  - Automated release builds and crate publishing
+
+### Stability
+
+- [ ] API review: audit all public types and methods for consistency
+- [ ] Deprecation policy: document breaking change process
+- [ ] Comprehensive test coverage: target 80%+ line coverage
+- [ ] Performance benchmarks: render time for complex component trees
+- [ ] Accessibility audit: keyboard navigation coverage across all components
+
+---
+
+## Components Not Planned
+
+The following shadcn/ui components are not planned due to limited value in a desktop framework context.
 
 | Component | Reason |
 |-----------|--------|
-| **Chart** | Requires canvas or SVG rendering for drawing lines, bars, and areas. GPUI has no canvas/SVG drawing API -- only div-based box layout. |
-| **DataTable** | Requires virtualized scrolling for large datasets, column resizing (drag), sortable headers, row selection state, and inline editing. The combination of these features is beyond what div-based layout can handle performantly. |
-| **Calendar** | Requires a complex 7-column date grid with month/year navigation, date range selection, and keyboard arrow-key navigation across cells. While theoretically possible, the effort is disproportionate to the value in a desktop framework context. |
-| **DatePicker** | Depends on Calendar + Popover + editable text input. Cannot be built until all three dependencies are available. |
-| **Carousel** | Requires drag/swipe gestures with smooth animated transitions between slides. GPUI does not expose element-relative drag positions or animation interpolation. |
-| **Resizable** | Requires dragging a split handle to resize adjacent panels. GPUI does not expose element-relative mouse positions needed to calculate resize deltas during drag. |
-| **Combobox** | Requires a live editable text input with real-time filtering of a dropdown list as the user types. Depends on editable text input, which GPUI does not natively provide. |
-| **Command** | A command palette with fuzzy search. Same dependency on editable text input plus real-time filtering and keyboard navigation across dynamic results. |
-| **InputOTP** | Requires multiple independent single-character editable input fields with automatic focus advance. Depends on editable text input and precise focus management between fields. |
-| **ContextMenu** | Requires capturing the right-click event with precise cursor coordinates to position a menu. GPUI's event model does not expose right-click position data. |
-| **Menubar** | Requires multi-level nested dropdown menus with hover-to-open behavior across menu items, precise sub-menu positioning, and complex focus trapping. The interaction model is significantly more complex than a simple dropdown. |
-| **NavigationMenu** | Same issues as Menubar: multi-level hover-triggered dropdowns with precise positioning and focus management. |
-| **Sidebar** | Typically requires collapsible + resizable behavior. Could be partially implemented as a static layout, but the interactive features (drag to resize, collapse animation) depend on unsupported GPUI capabilities. |
-| **AspectRatio** | GPUI's layout model does not support CSS-style `aspect-ratio` constraints. A fixed-size wrapper is possible but defeats the purpose of a responsive aspect-ratio component. |
-| **Direction** | Provides RTL (right-to-left) text direction support. GPUI does not have native RTL layout capabilities. |
+| **AspectRatio** | GPUI's layout engine (Taffy) does not support CSS `aspect-ratio`. Manual calculation with fixed dimensions is possible but provides no benefit over setting width/height directly. |
+| **Direction** | RTL text layout requires bidirectional text shaping at the rendering engine level. GPUI's text layout does not currently support this. Not a priority for most desktop applications. |
+
+---
+
+## Version Summary
+
+| Version | Phase | Components | Total |
+|---------|-------|------------|-------|
+| v0.1.0 | Phase 1 ✅ | 12 core components | 12 |
+| v0.2.0 | Phase 2 | 10 overlay/feedback | 22 |
+| v0.3.0 | Phase 3 | 12 visual/display | 34 |
+| v0.4.0 | Phase 4 | 12 navigation/structure | 46 |
+| v0.5.0 | Phase 5 | 10 advanced interactive | 56 |
+| v0.6.0 | Phase 6 | 3 data visualization | 59 |
+| v1.0.0 | Phase 7 | Infrastructure + stability | 59 |
