@@ -10,4 +10,5 @@ publish = false
 gpui = "0.2.2"
 
 # Pin core-text to 21.0.0 to avoid core-graphics version conflict
+[target.'cfg(target_os = "macos")'.dependencies]
 core-text = "=21.0.0"

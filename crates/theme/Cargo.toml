@@ -8,4 +8,6 @@ description = "Theme system for shadcn-ui-rs"
 [dependencies]
 gpui.workspace = true
 serde.workspace = true
+
+[target.'cfg(target_os = "macos")'.dependencies]
 core-text.workspace = true
