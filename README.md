@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/martinadamsdev/shadcn-ui-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/martinadamsdev/shadcn-ui-rs/actions/workflows/ci.yml)
 
+English | [中文](README.zh-CN.md)
+
 Beautiful, accessible UI components for [GPUI](https://gpui.rs/). Inspired by [shadcn/ui](https://ui.shadcn.com/).
 
 Copy components directly into your Rust project. No wrapper crate, no runtime overhead -- just source code you own and customize. Every variant, size, and prop is checked at compile time.

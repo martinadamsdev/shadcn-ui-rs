@@ -105,10 +105,10 @@ impl Registry {
     }
 }
 
-/// Default registry with all Phase 1 components.
+/// Default registry with all components.
 pub fn default_registry() -> Registry {
     Registry {
-        version: "0.1.0".to_string(),
+        version: "0.2.0".to_string(),
         components: vec![
             ComponentMeta {
                 name: "button".to_string(),
@@ -219,6 +219,99 @@ pub fn default_registry() -> Registry {
                 gpui_version: ">=0.2.0".to_string(),
                 files: vec!["dialog.rs".to_string()],
                 dependencies: vec!["button".to_string()],
+                category: ComponentCategory::Feedback,
+            },
+            // Phase 2
+            ComponentMeta {
+                name: "alert".to_string(),
+                version: "0.2.0".to_string(),
+                description: "A static alert box with icon, title, and description".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["alert.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Feedback,
+            },
+            ComponentMeta {
+                name: "alert_dialog".to_string(),
+                version: "0.2.0".to_string(),
+                description: "A modal confirmation dialog with action and cancel buttons"
+                    .to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["alert_dialog.rs".to_string()],
+                dependencies: vec!["dialog".to_string()],
+                category: ComponentCategory::Feedback,
+            },
+            ComponentMeta {
+                name: "tooltip".to_string(),
+                version: "0.2.0".to_string(),
+                description: "A hover-triggered overlay with text content".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["tooltip.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Display,
+            },
+            ComponentMeta {
+                name: "popover".to_string(),
+                version: "0.2.0".to_string(),
+                description: "A click-triggered overlay with arbitrary content".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["popover.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Display,
+            },
+            ComponentMeta {
+                name: "hover_card".to_string(),
+                version: "0.2.0".to_string(),
+                description: "A hover-triggered card overlay with rich content".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["hover_card.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Display,
+            },
+            ComponentMeta {
+                name: "dropdown_menu".to_string(),
+                version: "0.2.0".to_string(),
+                description: "A click-triggered menu with items, separators, and labels"
+                    .to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["dropdown_menu.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Navigation,
+            },
+            ComponentMeta {
+                name: "sheet".to_string(),
+                version: "0.2.0".to_string(),
+                description: "A slide-in overlay panel from screen edge".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["sheet.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Layout,
+            },
+            ComponentMeta {
+                name: "drawer".to_string(),
+                version: "0.2.0".to_string(),
+                description: "A bottom sheet variant with drag handle".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["drawer.rs".to_string()],
+                dependencies: vec!["sheet".to_string()],
+                category: ComponentCategory::Layout,
+            },
+            ComponentMeta {
+                name: "toast".to_string(),
+                version: "0.2.0".to_string(),
+                description: "A temporary notification with auto-dismiss support".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["toast.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Feedback,
+            },
+            ComponentMeta {
+                name: "sonner".to_string(),
+                version: "0.2.0".to_string(),
+                description: "A stacked toast notification system".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["sonner.rs".to_string()],
+                dependencies: vec![],
                 category: ComponentCategory::Feedback,
             },
         ],

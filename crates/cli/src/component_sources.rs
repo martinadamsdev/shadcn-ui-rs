@@ -18,6 +18,17 @@ pub fn get_component_source(name: &str) -> Option<&'static str> {
         "toggle_group" => Some(include_str!("../../../components/toggle_group.rs")),
         "card" => Some(include_str!("../../../components/card.rs")),
         "dialog" => Some(include_str!("../../../components/dialog.rs")),
+        // Phase 2
+        "alert" => Some(include_str!("../../../components/alert.rs")),
+        "alert_dialog" => Some(include_str!("../../../components/alert_dialog.rs")),
+        "tooltip" => Some(include_str!("../../../components/tooltip.rs")),
+        "popover" => Some(include_str!("../../../components/popover.rs")),
+        "hover_card" => Some(include_str!("../../../components/hover_card.rs")),
+        "dropdown_menu" => Some(include_str!("../../../components/dropdown_menu.rs")),
+        "sheet" => Some(include_str!("../../../components/sheet.rs")),
+        "drawer" => Some(include_str!("../../../components/drawer.rs")),
+        "toast" => Some(include_str!("../../../components/toast.rs")),
+        "sonner" => Some(include_str!("../../../components/sonner.rs")),
         _ => None,
     }
 }
