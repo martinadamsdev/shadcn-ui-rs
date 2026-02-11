@@ -4,7 +4,7 @@ A complete Rust port of [shadcn/ui](https://ui.shadcn.com/) built on the [GPUI](
 
 ## Status
 
-This project is at **v0.1.0** (Phase 1). The core CLI, theme system, and 12 foundational components are implemented. See the [Roadmap](docs/ROADMAP.md) for planned future phases.
+This project is at **v0.1.0** (Phase 1). The core CLI, theme system, and 12 foundational components are implemented. See the [Roadmap](docs/roadmap.md) for planned future phases.
 
 ## Quick Start
 
@@ -135,7 +135,7 @@ your-project/
 - [Getting Started](docs/getting-started.md) -- Step-by-step setup guide
 - [Components](docs/components.md) -- Full API reference for all 12 components
 - [Theming](docs/theming.md) -- Theme system guide with customization
-- [Roadmap](docs/ROADMAP.md) -- Development phases and planned features
+- [Roadmap](docs/roadmap.md) -- Development phases and planned features
 
 ## Contributing
 
