@@ -727,22 +727,22 @@ All agents run in parallel. After completion, team lead handles integration (Ste
 ## File Checklist
 
 New files to create:
-- [ ] `components/breadcrumb.rs`
-- [ ] `components/button_group.rs`
-- [ ] `components/field.rs`
-- [ ] `components/item.rs`
-- [ ] `components/collapsible.rs`
-- [ ] `components/accordion.rs`
-- [ ] `components/tabs.rs`
-- [ ] `components/context_menu.rs`
-- [ ] `components/menubar.rs`
-- [ ] `components/navigation_menu.rs`
-- [ ] `components/sidebar.rs`
-- [ ] `components/pagination.rs`
+- [x] `components/breadcrumb.rs`
+- [x] `components/button_group.rs`
+- [x] `components/field.rs`
+- [x] `components/item.rs`
+- [x] `components/collapsible.rs`
+- [x] `components/accordion.rs`
+- [x] `components/tabs.rs`
+- [x] `components/context_menu.rs`
+- [x] `components/menubar.rs`
+- [x] `components/navigation_menu.rs`
+- [x] `components/sidebar.rs`
+- [x] `components/pagination.rs`
 
 Files to update:
-- [ ] `components/mod.rs` -- add 12 module declarations + re-exports
-- [ ] `crates/cli/src/component_sources.rs` -- add 12 include_str entries
-- [ ] `crates/registry/src/lib.rs` -- add 12 ComponentMeta entries, bump version
-- [ ] `docs/roadmap.md` -- mark Phase 4 complete
-- [ ] `CHANGELOG.md` -- add v0.4.0 entry
+- [x] `components/mod.rs` -- add 12 module declarations + re-exports
+- [x] `crates/cli/src/component_sources.rs` -- add 12 include_str entries
+- [x] `crates/registry/src/lib.rs` -- add 12 ComponentMeta entries, bump version
+- [x] `docs/roadmap.md` -- mark Phase 4 complete
+- [x] `CHANGELOG.md` -- add v0.4.0 entry

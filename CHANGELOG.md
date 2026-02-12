@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-02-12
+
+### Added
+
+- 12 Phase 4 navigation and structural components: Tabs, Accordion, Collapsible, Breadcrumb, Pagination, ButtonGroup, Field, ContextMenu, Menubar, NavigationMenu, Sidebar, and Item.
+- ContextMenu and Menubar reuse DropdownMenuEntry/DropdownMenuItem types from Phase 2, enabling consistent menu rendering across the library.
+- Public accessor methods on DropdownMenuItem (value, label, is_disabled, is_destructive) for cross-module reuse.
+
 ## [0.3.0] - 2026-02-12
 
 ### Added
@@ -40,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation: getting started guide, full component API reference, and theming guide.
 - Component registry with metadata, dependencies, and source code for all 12 components.
 
+[0.4.0]: https://github.com/martinadamsdev/shadcn-ui-rs/releases/tag/v0.4.0
 [0.3.0]: https://github.com/martinadamsdev/shadcn-ui-rs/releases/tag/v0.3.0
 [0.2.0]: https://github.com/martinadamsdev/shadcn-ui-rs/releases/tag/v0.2.0
 [0.1.0]: https://github.com/martinadamsdev/shadcn-ui-rs/releases/tag/v0.1.0

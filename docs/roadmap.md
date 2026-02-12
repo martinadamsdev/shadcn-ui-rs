@@ -90,64 +90,40 @@ Visual display components. 11 components (Spinner deferred to Phase 6).
 
 ---
 
-## Phase 4 -- v0.4.0
+## Phase 4 -- v0.4.0 ✅
 
-Navigation and structural components. Click-driven panel switching, focus management with `FocusHandle`, and right-click context menus.
+Navigation and structural components. Click-driven panel switching and right-click context menus.
 
-### Components (12)
+### Completed
 
-- [ ] **Tabs** -- Tabbed content panels
-  - TabsList + TabsTrigger + TabsContent pattern
-  - Track active tab state, show/hide panels
-  - Keyboard navigation: arrow keys between tabs via `on_key_down()`
-  - Focus management with `FocusHandle` and `.track_focus()`
-- [ ] **Accordion** -- Expandable/collapsible content sections
-  - Single or multiple open sections
-  - Animate expand/collapse height with `with_animation()`
-  - AccordionItem + AccordionTrigger + AccordionContent pattern
-- [ ] **Collapsible** -- Single expandable section
-  - Simplified Accordion for a single section
-  - `open` state prop with `on_open_change` callback
-- [ ] **Breadcrumb** -- Navigation path indicator
-  - BreadcrumbList + BreadcrumbItem + BreadcrumbSeparator
-  - Each item clickable with `on_click` callback
-- [ ] **Pagination** -- Page navigation controls
-  - Previous/Next buttons + page number buttons
-  - `current_page`, `total_pages` props
-  - `on_page_change` callback
-- [ ] **ButtonGroup** -- Grouped buttons with connected borders
-  - Container that merges adjacent Button borders
-  - Support horizontal and vertical orientation
-- [ ] **Field** -- Form field wrapper with label, input, description, and error
-  - Composite layout: Label + slot + description/error text
-  - Error state styling
-- [ ] **ContextMenu** -- Right-click triggered menu
-  - Use `on_mouse_down(MouseButton::Right, ...)` to capture position
-  - Use `MouseDownEvent.position` for menu placement
-  - Reuse DropdownMenu rendering for menu items
-  - Dismiss with `on_mouse_down_out()` and Escape key
-- [ ] **Menubar** -- Application menu bar with dropdown menus
-  - Horizontal bar with MenubarMenu + MenubarTrigger + MenubarContent
-  - Hover-to-switch between open menus when one is already open
-  - Keyboard navigation: arrow keys between menus, up/down within menus
-  - Focus trapping with `FocusHandle`
-- [ ] **NavigationMenu** -- Multi-level navigation with dropdown panels
-  - Similar to Menubar but with wider content panels
-  - Support links, groups, and descriptions within panels
-- [ ] **Sidebar** -- Collapsible side navigation panel
-  - Fixed-width panel with collapse toggle
-  - Animate width change with `with_animation()`
-  - Support SidebarHeader, SidebarContent, SidebarFooter sections
-- [ ] **Item** -- Generic list item with icon, label, and action
-  - Reusable row component for menus, lists, sidebars
+- [x] **Tabs** -- Tabbed content panels (TabsList + TabsTrigger + TabsContent)
+- [x] **Accordion** -- Expandable/collapsible content sections (Single/Multiple mode)
+- [x] **Collapsible** -- Single expandable section with open/close toggle
+- [x] **Breadcrumb** -- Navigation path indicator with clickable items and separators
+- [x] **Pagination** -- Page navigation with previous/next and page number buttons
+- [x] **ButtonGroup** -- Grouped buttons with connected borders (horizontal/vertical)
+- [x] **Field** -- Form field wrapper with label, input, description, and error
+- [x] **ContextMenu** -- Right-click triggered menu using `MouseButton::Right` and position tracking
+- [x] **Menubar** -- Application menu bar with dropdown menus (MenubarMenu + MenubarSeparator)
+- [x] **NavigationMenu** -- Multi-level navigation with wide dropdown panels
+- [x] **Sidebar** -- Collapsible side navigation panel (Header/Content/Footer sections)
+- [x] **Item** -- Generic list item with icon, label, and trailing action
+- [x] ContextMenu and Menubar reuse `DropdownMenuEntry`/`DropdownMenuItem` from Phase 2
+- [x] All 12 components added to CLI registry
+- [x] Unit tests for each component
 
-### Infrastructure
+### Deferred Items
 
-- [ ] Shared `Menu` utility for DropdownMenu, ContextMenu, Menubar
-- [ ] Shared `FocusGroup` helper for keyboard navigation patterns
-- [ ] Focus trap utility: keep focus within a container (for dialogs, menus)
-- [ ] Unit tests for all 12 components
-- [ ] Update CLI registry with all new components
+| Item | Original Scope | Deferred To | Reason |
+|------|---------------|-------------|--------|
+| **Tabs keyboard navigation** | Arrow keys between tabs via `on_key_down()` | **Phase 5** | Requires `FocusHandle` which needs View-level entity, not RenderOnce |
+| **Menubar hover-to-switch** | Hover to switch between open menus | **Phase 5** | Complex mouse tracking; click-to-switch sufficient for Phase 4 |
+| **Menubar keyboard navigation** | Arrow keys between menus, up/down within | **Phase 5** | Requires `FocusHandle` and focus trapping |
+| **Accordion animation** | `with_animation()` expand/collapse | **Phase 5** | Consistent with Phase 2 no-animation strategy |
+| **Sidebar animation** | `with_animation()` width collapse | **Phase 5** | Same as above |
+| **Shared Menu utility** | Shared rendering for DropdownMenu/ContextMenu/Menubar | **Future** | Direct reuse of DropdownMenuEntry types sufficient |
+| **Shared FocusGroup helper** | Keyboard navigation patterns | **Phase 5** | Deferred with keyboard nav features |
+| **Focus trap utility** | Keep focus within container | **Phase 5** | Same as above |
 
 ---
 
@@ -308,8 +284,8 @@ The following shadcn/ui components are not planned due to limited value in a des
 |---------|-------|------------|-------|
 | v0.1.0 | Phase 1 ✅ | 12 core components | 12 |
 | v0.2.0 | Phase 2 ✅ | 10 overlay/feedback | 22 |
-| v0.3.0 | Phase 3 | 11 visual/display | 33 |
-| v0.4.0 | Phase 4 | 12 navigation/structure | 45 |
+| v0.3.0 | Phase 3 ✅ | 11 visual/display | 33 |
+| v0.4.0 | Phase 4 ✅ | 12 navigation/structure | 45 |
 | v0.5.0 | Phase 5 | 10 advanced interactive | 55 |
 | v0.6.0 | Phase 6 | 4 data visualization + spinner | 59 |
 | v1.0.0 | Phase 7 | Infrastructure + stability | 59 |
