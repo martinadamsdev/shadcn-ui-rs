@@ -66,6 +66,26 @@ impl DropdownMenuItem {
         self.destructive = destructive;
         self
     }
+
+    /// Returns the value of this menu item.
+    pub fn value(&self) -> &SharedString {
+        &self.value
+    }
+
+    /// Returns the label of this menu item.
+    pub fn label(&self) -> &SharedString {
+        &self.label
+    }
+
+    /// Returns whether this menu item is disabled.
+    pub fn is_disabled(&self) -> bool {
+        self.disabled
+    }
+
+    /// Returns whether this menu item is destructive.
+    pub fn is_destructive(&self) -> bool {
+        self.destructive
+    }
 }
 
 // ---------------------------------------------------------------------------
