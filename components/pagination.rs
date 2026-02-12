@@ -179,7 +179,7 @@ impl RenderOnce for Pagination {
                     let is_current = page == current;
 
                     let mut btn = div()
-                        .id(ElementId::NamedInteger("page".into(), idx))
+                        .id(ElementId::NamedInteger("page".into(), idx as u64))
                         .w(px(36.0))
                         .h(px(36.0))
                         .flex()
