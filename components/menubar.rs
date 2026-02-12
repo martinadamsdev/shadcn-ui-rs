@@ -28,7 +28,7 @@ use gpui::{
     Window,
 };
 
-use crate::dropdown_menu::{DropdownMenuEntry, DropdownMenuItem};
+use super::dropdown_menu::{DropdownMenuEntry, DropdownMenuItem};
 use crate::theme::Theme;
 
 // ---------------------------------------------------------------------------
