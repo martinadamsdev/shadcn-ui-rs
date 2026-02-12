@@ -32,7 +32,7 @@ use gpui::{
     KeyDownEvent, MouseButton, MouseDownEvent, RenderOnce, SharedString, Stateful, Styled, Window,
 };
 
-use crate::dropdown_menu::{DropdownMenuEntry, DropdownMenuItem};
+use super::dropdown_menu::{DropdownMenuEntry, DropdownMenuItem};
 use crate::theme::Theme;
 
 // ---------------------------------------------------------------------------
@@ -170,8 +170,8 @@ impl RenderOnce for ContextMenu {
                         move |event: &MouseDownEvent, window, cx| {
                             if let Some(ref handler) = on_open {
                                 handler(
-                                    event.position.x.0,
-                                    event.position.y.0,
+                                    f32::from(event.position.x),
+                                    f32::from(event.position.y),
                                     window,
                                     cx,
                                 );
