@@ -108,7 +108,7 @@ impl Registry {
 /// Default registry with all components.
 pub fn default_registry() -> Registry {
     Registry {
-        version: "0.3.0".to_string(),
+        version: "0.4.0".to_string(),
         components: vec![
             ComponentMeta {
                 name: "button".to_string(),
@@ -415,6 +415,120 @@ pub fn default_registry() -> Registry {
                 files: vec!["empty.rs".to_string()],
                 dependencies: vec![],
                 category: ComponentCategory::Display,
+            },
+            // Phase 4
+            ComponentMeta {
+                name: "accordion".to_string(),
+                version: "0.4.0".to_string(),
+                description: "Expandable/collapsible content sections with single or multiple mode"
+                    .to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["accordion.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Layout,
+            },
+            ComponentMeta {
+                name: "breadcrumb".to_string(),
+                version: "0.4.0".to_string(),
+                description: "Navigation path indicator with clickable items and separators"
+                    .to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["breadcrumb.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Navigation,
+            },
+            ComponentMeta {
+                name: "button_group".to_string(),
+                version: "0.4.0".to_string(),
+                description: "Grouped buttons with connected borders".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["button_group.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Layout,
+            },
+            ComponentMeta {
+                name: "collapsible".to_string(),
+                version: "0.4.0".to_string(),
+                description: "A single expandable/collapsible content section".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["collapsible.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Layout,
+            },
+            ComponentMeta {
+                name: "context_menu".to_string(),
+                version: "0.4.0".to_string(),
+                description: "A right-click triggered context menu".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["context_menu.rs".to_string()],
+                dependencies: vec!["dropdown_menu".to_string()],
+                category: ComponentCategory::Navigation,
+            },
+            ComponentMeta {
+                name: "field".to_string(),
+                version: "0.4.0".to_string(),
+                description: "Form field wrapper with label, input, description, and error"
+                    .to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["field.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Input,
+            },
+            ComponentMeta {
+                name: "item".to_string(),
+                version: "0.4.0".to_string(),
+                description: "A generic list item with icon, label, and action".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["item.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Layout,
+            },
+            ComponentMeta {
+                name: "menubar".to_string(),
+                version: "0.4.0".to_string(),
+                description: "Application menu bar with dropdown menus".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["menubar.rs".to_string()],
+                dependencies: vec!["dropdown_menu".to_string()],
+                category: ComponentCategory::Navigation,
+            },
+            ComponentMeta {
+                name: "navigation_menu".to_string(),
+                version: "0.4.0".to_string(),
+                description: "Multi-level navigation with wide dropdown panels".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["navigation_menu.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Navigation,
+            },
+            ComponentMeta {
+                name: "pagination".to_string(),
+                version: "0.4.0".to_string(),
+                description: "Page navigation controls with previous/next and page numbers"
+                    .to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["pagination.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Navigation,
+            },
+            ComponentMeta {
+                name: "sidebar".to_string(),
+                version: "0.4.0".to_string(),
+                description: "Collapsible side navigation panel".to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["sidebar.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Navigation,
+            },
+            ComponentMeta {
+                name: "tabs".to_string(),
+                version: "0.4.0".to_string(),
+                description: "Tabbed content panels with trigger list and content areas"
+                    .to_string(),
+                gpui_version: ">=0.2.0".to_string(),
+                files: vec!["tabs.rs".to_string()],
+                dependencies: vec![],
+                category: ComponentCategory::Navigation,
             },
         ],
     }
