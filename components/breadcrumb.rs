@@ -12,7 +12,9 @@
 //! ```
 
 use gpui::prelude::*;
-use gpui::{div, px, AnyElement, App, ClickEvent, IntoElement, ParentElement, SharedString, Window};
+use gpui::{
+    div, px, AnyElement, App, ClickEvent, IntoElement, ParentElement, SharedString, Styled, Window,
+};
 
 use crate::theme::Theme;
 
@@ -51,22 +53,23 @@ impl RenderOnce for BreadcrumbItem {
         let theme = cx.global::<Theme>();
         let colors = &theme.colors;
 
-        let is_link = self.on_click.is_some();
-
-        let mut el = div().text_sm();
-
-        if is_link {
-            el = el
+        if let Some(on_click) = self.on_click {
+            div()
                 .id("breadcrumb-item")
+                .text_sm()
                 .text_color(colors.muted_foreground)
                 .cursor_pointer()
-                .hover(|style: gpui::StyleRefinement| style.text_decoration_line(gpui::TextDecorationLine::Underline))
-                .on_click(self.on_click.unwrap());
+                .hover(|style: gpui::StyleRefinement| style.underline())
+                .on_click(on_click)
+                .child(self.label)
+                .into_any_element()
         } else {
-            el = el.text_color(colors.foreground);
+            div()
+                .text_sm()
+                .text_color(colors.foreground)
+                .child(self.label)
+                .into_any_element()
         }
-
-        el.child(self.label)
     }
 }
 
