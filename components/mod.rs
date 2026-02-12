@@ -94,3 +94,33 @@ pub use skeleton::Skeleton;
 pub use table::{Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow};
 pub use textarea::Textarea;
 pub use typography::{Blockquote, H1, H2, H3, H4, InlineCode, Lead, Paragraph};
+
+// Phase 4
+pub mod accordion;
+pub mod breadcrumb;
+pub mod button_group;
+pub mod collapsible;
+pub mod context_menu;
+pub mod field;
+pub mod item;
+pub mod menubar;
+pub mod navigation_menu;
+pub mod pagination;
+pub mod sidebar;
+pub mod tabs;
+
+// Phase 4 re-exports
+pub use accordion::{Accordion, AccordionContent, AccordionItem, AccordionTrigger, AccordionType};
+pub use breadcrumb::{Breadcrumb, BreadcrumbItem, BreadcrumbSeparator};
+pub use button_group::{ButtonGroup, ButtonGroupOrientation};
+pub use collapsible::Collapsible;
+pub use context_menu::ContextMenu;
+pub use field::Field;
+pub use item::Item;
+pub use menubar::{Menubar, MenubarMenu, MenubarSeparator};
+pub use navigation_menu::{NavigationMenu, NavigationMenuItem, NavigationMenuLink};
+pub use pagination::Pagination;
+pub use sidebar::{
+    Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSide, SidebarTrigger,
+};
+pub use tabs::{Tabs, TabsContent, TabsList, TabsTrigger};
