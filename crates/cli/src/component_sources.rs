@@ -41,6 +41,19 @@ pub fn get_component_source(name: &str) -> Option<&'static str> {
         "scroll_area" => Some(include_str!("../../../components/scroll_area.rs")),
         "textarea" => Some(include_str!("../../../components/textarea.rs")),
         "empty" => Some(include_str!("../../../components/empty.rs")),
+        // Phase 4
+        "accordion" => Some(include_str!("../../../components/accordion.rs")),
+        "breadcrumb" => Some(include_str!("../../../components/breadcrumb.rs")),
+        "button_group" => Some(include_str!("../../../components/button_group.rs")),
+        "collapsible" => Some(include_str!("../../../components/collapsible.rs")),
+        "context_menu" => Some(include_str!("../../../components/context_menu.rs")),
+        "field" => Some(include_str!("../../../components/field.rs")),
+        "item" => Some(include_str!("../../../components/item.rs")),
+        "menubar" => Some(include_str!("../../../components/menubar.rs")),
+        "navigation_menu" => Some(include_str!("../../../components/navigation_menu.rs")),
+        "pagination" => Some(include_str!("../../../components/pagination.rs")),
+        "sidebar" => Some(include_str!("../../../components/sidebar.rs")),
+        "tabs" => Some(include_str!("../../../components/tabs.rs")),
         _ => None,
     }
 }
