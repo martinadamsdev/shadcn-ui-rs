@@ -262,36 +262,50 @@ impl RenderOnce for NavigationMenuLink {
         let accent = colors.accent;
         let muted_foreground = colors.muted_foreground;
 
-        let has_click = self.on_click.is_some();
+        let label_el = div()
+            .text_sm()
+            .font_weight(FontWeight::MEDIUM)
+            .child(self.label);
 
-        div()
-            .flex()
-            .flex_col()
-            .gap(px(2.0))
-            .p(px(12.0))
-            .rounded(px(radius))
-            .hover(|style| style.bg(accent))
-            .when(has_click, |el: Div| el.cursor_pointer())
-            .when_some(self.on_click, |el: Div, handler| {
-                el.id("nav-link")
-                    .on_click(move |event: &ClickEvent, window, cx| {
-                        handler(event, window, cx);
-                    })
-            })
-            .child(
-                div()
-                    .text_sm()
-                    .font_weight(FontWeight::MEDIUM)
-                    .child(self.label),
-            )
-            .when_some(self.description, |el, desc| {
-                el.child(
-                    div()
-                        .text_sm()
-                        .text_color(muted_foreground)
-                        .child(desc),
-                )
-            })
+        let desc_el = self.description.map(|desc| {
+            div()
+                .text_sm()
+                .text_color(muted_foreground)
+                .child(desc)
+        });
+
+        if let Some(handler) = self.on_click {
+            let mut el = div()
+                .id("nav-link")
+                .flex()
+                .flex_col()
+                .gap(px(2.0))
+                .p(px(12.0))
+                .rounded(px(radius))
+                .cursor_pointer()
+                .hover(|style| style.bg(accent))
+                .on_click(move |event: &ClickEvent, window, cx| {
+                    handler(event, window, cx);
+                })
+                .child(label_el);
+            if let Some(desc) = desc_el {
+                el = el.child(desc);
+            }
+            el.into_any_element()
+        } else {
+            let mut el = div()
+                .flex()
+                .flex_col()
+                .gap(px(2.0))
+                .p(px(12.0))
+                .rounded(px(radius))
+                .hover(|style| style.bg(accent))
+                .child(label_el);
+            if let Some(desc) = desc_el {
+                el = el.child(desc);
+            }
+            el.into_any_element()
+        }
     }
 }
 
